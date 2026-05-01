@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escola — Онлайн-школа іспанської та англійської мови</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sun: #F5B800;
+      --sun-light: #FFD84D;
+      --navy: #152B52;
+      --navy-deep: #0D1E3A;
+      --terra: #E8561A;
+      --cream: #FDF6E8;
+      --white: #FFFFFF;
+      --gray: #6B7280;
+      --light: #F9F4EB;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: var(--cream);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 6vw;
+      background: rgba(21,43,82,0.97);
+      backdrop-filter: blur(8px);
+      border-bottom: 2px solid var(--sun);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--sun);
+      letter-spacing: 0.03em;
+    }
+    .nav-logo span { color: var(--white); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--sun); }
+    .nav-cta {
+      background: var(--sun);
+      color: var(--navy-deep) !important;
+      padding: 8px 20px;
+      border-radius: 4px;
+      font-weight: 700 !important;
+    }
+    .nav-cta:hover { background: var(--sun-light); color: var(--navy-deep) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy-deep);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 0;
+      position: relative;
+      overflow: hidden;
+      padding-top: 80px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 60% 70% at 70% 50%, rgba(232,86,26,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 20% 80%, rgba(245,184,0,0.08) 0%, transparent 60%);
+    }
+    .hero-text {
+      padding: 80px 5vw 80px 8vw;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245,184,0,0.15);
+      border: 1px solid rgba(245,184,0,0.4);
+      color: var(--sun);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+    .hero-badge::before { content: '🇪🇸'; font-size: 1rem; }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--sun);
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.65);
+      font-weight: 400;
+      margin-bottom: 40px;
+      line-height: 1.65;
+      max-width: 480px;
+    }
+    .hero-sub strong { color: var(--sun-light); font-weight: 600; }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--sun);
+      color: var(--navy-deep);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 15px 32px;
+      border-radius: 6px;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(245,184,0,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(245,184,0,0.45); }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid rgba(255,255,255,0.25);
+      color: var(--white);
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 13px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--sun); background: rgba(245,184,0,0.08); }
+    .hero-stats {
+      display: flex;
+      gap: 36px;
+      margin-top: 52px;
+      padding-top: 36px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .hero-stat-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--sun);
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.05em;
+      margin-top: 4px;
+    }
+    .hero-visual {
+      position: relative;
+      height: 100%;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    .hero-visual-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #1A4080 0%, #0D2040 50%, #1A1A2E 100%);
+    }
+    .hero-deco-circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.12;
+    }
+    .hero-deco-circle:nth-child(1) {
+      width: 500px; height: 500px;
+      background: var(--sun);
+      top: -100px; right: -100px;
+    }
+    .hero-deco-circle:nth-child(2) {
+      width: 300px; height: 300px;
+      background: var(--terra);
+      bottom: 100px; left: -60px;
+    }
+    .hero-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 40px;
+      width: 320px;
+      text-align: center;
+    }
+    .hero-card-flag { font-size: 3rem; margin-bottom: 12px; }
+    .hero-card-name {
+      font-family: 'Playfair Display', serif;
+      color: var(--white);
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .hero-card-title { color: rgba(255,255,255,0.55); font-size: 0.8rem; margin-bottom: 24px; }
+    .hero-card-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+    .hero-card-tag {
+      background: rgba(245,184,0,0.15);
+      border: 1px solid rgba(245,184,0,0.3);
+      color: var(--sun-light);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 100px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 6vw; }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 900;
+      color: var(--navy-deep);
+      line-height: 1.2;
+      margin-bottom: 18px;
+    }
+    .section-title em { font-style: normal; color: var(--terra); }
+    .section-desc {
+      color: var(--gray);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--white); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      margin-top: 60px;
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img-placeholder {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: linear-gradient(135deg, var(--navy) 0%, #1A4080 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-img-placeholder::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 60%);
+    }
+    .about-img-tag {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      background: var(--sun);
+      color: var(--navy-deep);
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 14px 20px;
+      border-radius: 12px;
+      letter-spacing: 0.04em;
+      box-shadow: 0 6px 24px rgba(245,184,0,0.4);
+      z-index: 2;
+    }
+    .about-list { margin-top: 32px; display: flex; flex-direction: column; gap: 16px; }
+    .about-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .about-icon {
+      flex-shrink: 0;
+      width: 42px; height: 42px;
+      background: var(--cream);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+    .about-item-text strong {
+      display: block;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--navy);
+      margin-bottom: 2px;
+    }
+    .about-item-text span { color: var(--gray); font-size: 0.88rem; line-height: 1.5; }
+
+    /* ── FEATURES ── */
+    #features { background: var(--cream); }
+    .features-header { max-width: 600px; }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 60px;
+    }
+    .feature-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 32px 28px;
+      border: 1px solid rgba(21,43,82,0.08);
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--sun);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+      transform-origin: left;
+    }
+    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(21,43,82,0.1); }
+    .feature-card:hover::before { transform: scaleX(1); }
+    .feature-icon { font-size: 2rem; margin-bottom: 16px; }
+    .feature-card h3 {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .feature-card p { color: var(--gray); font-size: 0.88rem; line-height: 1.6; }
+
+    /* ── PRICING ── */
+    #pricing { background: var(--navy-deep); }
+    #pricing .section-label { color: var(--sun-light); }
+    #pricing .section-title { color: var(--white); }
+    #pricing .section-title em { color: var(--sun); }
+    #pricing .section-desc { color: rgba(255,255,255,0.6); }
+
+    .pricing-tabs {
+      display: flex;
+      gap: 0;
+      background: rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 4px;
+      margin: 48px 0 40px;
+      width: fit-content;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .pricing-tab {
+      padding: 10px 28px;
+      border-radius: 9px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.55);
+      background: transparent;
+    }
+    .pricing-tab.active {
+      background: var(--sun);
+      color: var(--navy-deep);
+    }
+    .pricing-tab:hover:not(.active) { color: var(--white); }
+
+    .pricing-panel { display: none; }
+    .pricing-panel.active { display: block; }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .price-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 36px 28px 32px;
+      position: relative;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+    .price-card:hover { transform: translateY(-4px); border-color: rgba(245,184,0,0.4); }
+    .price-card.featured {
+      background: var(--sun);
+      border-color: var(--sun);
+    }
+    .price-card.featured * { color: var(--navy-deep) !important; }
+    .price-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--terra);
+      color: var(--white);
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 4px 14px;
+      border-radius: 100px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .price-card.featured .price-badge { background: var(--navy); color: var(--sun); }
+    .price-lang {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 10px;
+    }
+    .price-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .price-desc { color: rgba(255,255,255,0.55); font-size: 0.82rem; margin-bottom: 28px; line-height: 1.5; }
+    .price-amount {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+    .price-from { font-size: 0.8rem; color: rgba(255,255,255,0.5); font-weight: 600; }
+    .price-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--sun);
+      line-height: 1;
+    }
+    .price-currency { font-size: 1.4rem; font-weight: 700; color: var(--sun); }
+    .price-per { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-bottom: 28px; }
+    .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+    .price-features li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.75);
+    }
+    .price-features li::before { content: '✓'; color: var(--sun); font-weight: 800; flex-shrink: 0; }
+    .price-card.featured .price-features li::before { color: var(--navy); }
+    .price-cta {
+      display: block;
+      text-align: center;
+      padding: 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      background: rgba(255,255,255,0.1);
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.2);
+      letter-spacing: 0.03em;
+    }
+    .price-cta:hover { background: var(--sun); color: var(--navy-deep); border-color: var(--sun); }
+    .price-card.featured .price-cta {
+      background: var(--navy);
+      color: var(--sun);
+      border-color: var(--navy);
+    }
+    .price-card.featured .price-cta:hover { background: var(--navy-deep); }
+    .price-card.featured .price-val { color: var(--navy-deep); }
+    .price-card.featured .price-currency { color: var(--navy-deep); }
+    .price-card.featured .price-from { color: rgba(21,43,82,0.6); }
+    .price-card.featured .price-per { color: rgba(21,43,82,0.55); }
+    .price-card.featured .price-features li { color: var(--navy); }
+    .price-card.featured .price-lang { color: rgba(21,43,82,0.55); }
+    .price-card.featured .price-desc { color: rgba(21,43,82,0.6); }
+
+    .pricing-note {
+      margin-top: 32px;
+      padding: 18px 24px;
+      background: rgba(245,184,0,0.08);
+      border: 1px solid rgba(245,184,0,0.2);
+      border-radius: 10px;
+      color: rgba(255,255,255,0.65);
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+    .pricing-note strong { color: var(--sun); }
+
+    /* ── STEPS ── */
+    #steps { background: var(--cream); }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 60px;
+      position: relative;
+    }
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 34px;
+      left: calc(16.66% + 28px);
+      right: calc(16.66% + 28px);
+      height: 2px;
+      background: linear-gradient(90deg, var(--sun), var(--terra));
+      z-index: 0;
+    }
+    .step-item { text-align: center; position: relative; z-index: 1; }
+    .step-num {
+      width: 68px; height: 68px;
+      background: var(--sun);
+      color: var(--navy-deep);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      box-shadow: 0 6px 20px rgba(245,184,0,0.3);
+    }
+    .step-item h3 {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .step-item p { color: var(--gray); font-size: 0.88rem; line-height: 1.6; }
+
+    /* ── CTA ── */
+    #cta {
+      background: linear-gradient(135deg, var(--terra) 0%, #B5390E 100%);
+      text-align: center;
+      padding: 100px 6vw;
+      position: relative;
+      overflow: hidden;
+    }
+    #cta::before {
+      content: '¡Hola!';
+      position: absolute;
+      font-family: 'Playfair Display', serif;
+      font-size: 18rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.04);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    #cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    #cta p {
+      color: rgba(255,255,255,0.8);
+      font-size: 1.1rem;
+      max-width: 480px;
+      margin: 0 auto 40px;
+      line-height: 1.65;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--white);
+      color: var(--terra);
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 18px 42px;
+      border-radius: 8px;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      box-shadow: 0 6px 28px rgba(0,0,0,0.2);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,0.28); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy-deep);
+      padding: 60px 6vw 36px;
+      border-top: 2px solid var(--sun);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 48px;
+    }
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--sun);
+      margin-bottom: 14px;
+    }
+    .footer-brand span { color: var(--white); }
+    .footer-about { color: rgba(255,255,255,0.45); font-size: 0.85rem; line-height: 1.7; }
+    .footer-col-title {
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--sun); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy { color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+    .footer-flags { font-size: 1.3rem; letter-spacing: 4px; }
+
+    /* ── ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .hero-text { padding: 80px 6vw 60px; }
+      .about-grid,
+      .features-grid,
+      .pricing-grid,
+      .steps-grid,
+      .footer-grid { grid-template-columns: 1fr; }
+      .steps-grid::before { display: none; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 70px 5vw; }
+      .hero-stats { flex-wrap: wrap; gap: 24px; }
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Escola<span> · Мовна школа</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">Про нас</a></li>
+    <li><a href="#features">Що входить</a></li>
+    <li><a href="#pricing">Ціни</a></li>
+    <li><a href="#steps">Як записатися</a></li>
+    <li><a href="https://t.me/manager_spanishschool" class="nav-cta" target="_blank">Записатися →</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-text">
+    <div class="hero-badge">Онлайн-школа · Олеся Лилак-Чижович</div>
+    <h1>Вивчай <em>іспанську</em><br>та англійську<br>— з душею</h1>
+    <p class="hero-sub">
+      Школа для українців, які хочуть говорити впевнено — <strong>не просто вчити правила</strong>. Живі заняття, носії мови та міжнародний сертифікат.
+    </p>
+    <div class="hero-btns">
+      <a href="https://t.me/manager_spanishschool" target="_blank" class="btn-primary">✉ Записатися в Telegram</a>
+      <a href="#features" class="btn-outline">Що входить у курс</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-val">7</div>
+        <div class="hero-stat-label">Макс. осіб у групі</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">2×</div>
+        <div class="hero-stat-label">Заняття на тиждень</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">ECCAEDU</div>
+        <div class="hero-stat-label">Міжнародний сертифікат</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-visual-bg"></div>
+    <div class="hero-deco-circle"></div>
+    <div class="hero-deco-circle"></div>
+    <div class="hero-card">
+      <div class="hero-card-flag">🇪🇸🇺🇦</div>
+      <div class="hero-card-name">Олеся Лилак-Чижович</div>
+      <div class="hero-card-title">Засновниця школи · Канарські острови</div>
+      <div class="hero-card-tags">
+        <span class="hero-card-tag">Іспанська</span>
+        <span class="hero-card-tag">Англійська</span>
+        <span class="hero-card-tag">Speaking Club</span>
+        <span class="hero-card-tag">Онлайн</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap reveal">
+      <div class="about-img-placeholder">👩‍🏫</div>
+      <div class="about-img-tag">🇪🇸 Канарські острови</div>
+    </div>
+    <div class="reveal">
+      <div class="section-label">Засновниця школи</div>
+      <h2 class="section-title">Олеся<br><em>Лилак-Чижович</em></h2>
+      <p class="section-desc">
+        Освітня та громадська діячка, представниця Торгово-промислової палати України на Канарах 🇪🇸, радник Омбудсмена України 🇺🇦
+      </p>
+      <div class="about-list">
+        <div class="about-item">
+          <div class="about-icon">🌍</div>
+          <div class="about-item-text">
+            <strong>Президент Асоціації "Дві землі, Два сонця"</strong>
+            <span>Сприяє інтеграції українців в Іспанії та на Канарах</span>
+          </div>
+        </div>
+        <div class="about-item">
+          <div class="about-icon">🏛</div>
+          <div class="about-item-text">
+            <strong>Представниця ТПП України на Канарах</strong>
+            <span>Підтримує ділові зв'язки між Україною та Іспанією</span>
+          </div>
+        </div>
+        <div class="about-item">
+          <div class="about-icon">💛</div>
+          <div class="about-item-text">
+            <strong>Школа створена для українців</strong>
+            <span>Щоб допомогти швидко й ефективно опанувати мову з підтримкою</span>
+          </div>
+        </div>
+      </div>
+      <br>
+      <a href="https://www.instagram.com/olesyalylak_official" target="_blank" class="btn-primary" style="margin-top:8px; display:inline-flex;">
+        📸 Instagram Олесі
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="features-header reveal">
+    <div class="section-label">Що входить у курс</div>
+    <h2 class="section-title">Все для <em>реального</em><br>результату</h2>
+    <p class="section-desc">Кожен студент отримує повний пакет інструментів для швидкого прогресу — від інтерактивних уроків до живої практики з носієм мови.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-icon">👥</div>
+      <h3>Групи до 7 осіб</h3>
+      <p>Маленькі групи забезпечують індивідуальну увагу від викладача та активну розмовну практику кожного заняття.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🎓</div>
+      <h3>Професійні викладачі</h3>
+      <p>Досвідчені педагоги, які поєднують сучасні методики з живою атмосферою та практичним підходом.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">📜</div>
+      <h3>Диплом ECCAEDU</h3>
+      <p>Після складання екзамену отримуєш міжнародний сертифікат, визнаний у Європі.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">💻</div>
+      <h3>Доступ до LMS</h3>
+      <p>Платформа з інтерактивними уроками, домашніми завданнями та відстеженням персонального прогресу.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🗣</div>
+      <h3>Speaking Club з native</h3>
+      <p>Безкоштовний клуб розмовної практики з носієм мови — 1 раз на тиждень для всіх студентів.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🌴</div>
+      <h3>Зустрічі про життя в Іспанії</h3>
+      <p>Щомісячні онлайн-зустрічі з Олесею: про реальне життя, можливості та адаптацію на Канарах.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="reveal">
+    <div class="section-label">Тарифи</div>
+    <h2 class="section-title">Оберіть свій <em>формат</em></h2>
+    <p class="section-desc">Групові або індивідуальні заняття з іспанської чи англійської — обирай те, що підходить саме тобі.</p>
+  </div>
+
+  <div class="pricing-tabs">
+    <button class="pricing-tab active" onclick="switchLang('es')">🇪🇸 Іспанська</button>
+    <button class="pricing-tab" onclick="switchLang('en')">🇬🇧 Англійська</button>
+  </div>
+
+  <!-- SPANISH -->
+  <div class="pricing-panel active" id="panel-es">
+    <div class="pricing-grid reveal">
+      <div class="price-card">
+        <div class="price-lang">Іспанська · Група</div>
+        <div class="price-name">Груповий міні</div>
+        <div class="price-desc">Від 2 осіб. Ідеально для тих, хто хоче вчитися у компанії та заощадити.</div>
+        <div class="price-amount">
+          <span class="price-from">від</span>
+          <span class="price-val">10</span>
+          <span class="price-currency">€</span>
+        </div>
+        <div class="price-per">за 1 заняття · від 2 учасників</div>
+        <ul class="price-features">
+          <li>Група від 2 до 7 осіб</li>
+          <li>2 заняття на тиждень (55 хв)</li>
+          <li>Доступ до LMS</li>
+          <li>Домашні завдання</li>
+          <li>Speaking Club безкоштовно</li>
+        </ul>
+        <a href="https://t.me/manager_spanishschool" target="_blank" class="price-cta">Записатися →</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-badge">⭐ Найпопулярніший</div>
+        <div class="price-lang">Іспанська · Група</div>
+        <div class="price-name">Груповий стандарт</div>
+        <div class="price-desc">Повноцінний груповий курс із сертифікатом. Найкраще співвідношення ціни й результату.</div>
+        <div class="price-amount">
+          <span class="price-from">від</span>
+          <span class="price-val">12</span>
+          <span class="price-currency">€</span>
+        </div>
+        <div class="price-per">за 1 заняття · група до 7 осіб</div>
+        <ul class="price-features">
+          <li>Група до 7 осіб</li>
+          <li>2 заняття на тиждень (55 хв)</li>
+          <li>Диплом ECCAEDU</li>
+          <li>Доступ до LMS + прогрес</li>
+          <li>Speaking Club безкоштовно</li>
+          <li>Щомісячні зустрічі з Олесею</li>
+        </ul>
+        <a href="https://t.me/manager_spanishschool" target="_blank" class="price-cta">Записатися →</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-lang">Іспанська · Індивідуально</div>
+        <div class="price-name">Індивідуальний</div>
+        <div class="price-desc">Заняття 1 на 1 з викладачем. Максимальна увага, гнучкий графік, швидкий прогрес.</div>
+        <div class="price-amount">
+          <span class="price-from">від</span>
+          <span class="price-val">10</span>
+          <span class="price-currency">€</span>
+        </div>
+        <div class="price-per">за 1 заняття · персональна програма</div>
+        <ul class="price-features">
+          <li>Заняття 1 на 1 з викладачем</li>
+          <li>Гнучкий графік</li>
+          <li>Індивідуальна програма</li>
+          <li>Доступ до LMS</li>
+          <li>Speaking Club безкоштовно</li>
+        </ul>
+        <a href="https://t.me/manager_spanishschool" target="_blank" class="price-cta">Записатися →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENGLISH -->
+  <div class="pricing-panel" id="panel-en">
+    <div class="pricing-grid reveal">
+      <div class="price-card">
+        <div class="price-lang">Англійська · Група</div>
+        <div class="price-name">Груповий міні</div>
+        <div class="price-desc">Від 2 осіб. Ідеально для початківців і тих, хто хоче відновити знання у компанії.</div>
+        <div class="price-amount">
+          <span class="price-from">від</span>
+          <span class="price-val">10</span>
+          <span class="price-currency">€</span>
+        </div>
+        <div class="price-per">за 1 заняття · від 2 учасників</div>
+        <ul class="price-features">
+          <li>Група від 2 до 7 осіб</li>
+          <li>2 заняття на тиждень (55 хв)</li>
+          <li>Доступ до LMS</li>
+          <li>Домашні завдання</li>
+          <li>Speaking Club безкоштовно</li>
+        </ul>
+        <a href="https://t.me/manager_spanishschool" target="_blank" class="price-cta">Записатися →</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-badge">⭐ Найпопулярніший</div>
+        <div class="price-lang">Англійська · Група</div>
+        <div class="price-name">Груповий стандарт</div>
+        <div class="price-desc">Повноцінний курс англійської у групі. Живе спілкування, практика та чіткий прогрес.</div>
+        <div class="price-amount">
+          <span class="price-from">від</span>
+          <span class="price-val">12</span>
+          <span class="price-currency">€</span>
+        </div>
+        <div class="price-per">за 1 заняття · група до 7 осіб</div>
+        <ul class="price-features">
+          <li>Група до 7 осіб</li>
+          <li>2 заняття на тиждень (55 хв)</li>
+          <li>Сертифікат після курсу</li>
+          <li>Доступ до LMS + прогрес</li>
+          <li>Speaking Club безкоштовно</li>
+        </ul>
+        <a href="https://t.me/manager_spanishschool" target="_blank" class="price-cta">Записатися →</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-lang">Англійська · Індивідуально</div>
+        <div class="price-name">Індивідуальний</div>
+        <div class="price-desc">Персональні заняття 1 на 1. Індивідуальний темп, твої цілі — ваш пріоритет.</div>
+        <div class="price-amount">
+          <span class="price-from">від</span>
+          <span class="price-val">10</span>
+          <span class="price-currency">€</span>
+        </div>
+        <div class="price-per">за 1 заняття · персональна програма</div>
+        <ul class="price-features">
+          <li>Заняття 1 на 1 з викладачем</li>
+          <li>Гнучкий графік</li>
+          <li>Індивідуальна програма</li>
+          <li>Доступ до LMS</li>
+          <li>Speaking Club безкоштовно</li>
+        </ul>
+        <a href="https://t.me/manager_spanishschool" target="_blank" class="price-cta">Записатися →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="pricing-note reveal">
+    <strong>💬 Точна ціна залежить від рівня, тривалості та формату курсу.</strong> Напишіть нам у Telegram — і ми підберемо найкращий варіант особисто для вас. Усі ціни вказані в євро за одне заняття (55 хв).
+  </div>
+</section>
+
+<!-- STEPS -->
+<section id="steps">
+  <div class="reveal" style="max-width:560px">
+    <div class="section-label">Як розпочати</div>
+    <h2 class="section-title">Три кроки до<br><em>першого уроку</em></h2>
+  </div>
+  <div class="steps-grid">
+    <div class="step-item reveal">
+      <div class="step-num">1</div>
+      <h3>Напишіть нам</h3>
+      <p>Перейдіть до нашого Telegram-бота та залиште заявку. Ми відповімо швидко!</p>
+    </div>
+    <div class="step-item reveal">
+      <div class="step-num">2</div>
+      <h3>Оберіть формат</h3>
+      <p>Разом визначимо мову, рівень, формат (група або індивід.) та зручний час.</p>
+    </div>
+    <div class="step-item reveal">
+      <div class="step-num">3</div>
+      <h3>Починайте вчитися!</h3>
+      <p>Після підтвердження та оплати — доступ до LMS та перший урок. ¡Vamos!</p>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:56px" class="reveal">
+    <a href="https://t.me/manager_spanishschool" target="_blank" class="btn-primary" style="font-size:1.05rem; padding:18px 44px;">
+      ✈ Почати зараз у Telegram
+    </a>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section id="cta">
+  <h2>¡Vamos! Починаємо<br>вчити іспанську разом</h2>
+  <p>Приєднуйся до спільноти українців, які вже впевнено говорять — і живуть в Іспанії.</p>
+  <a href="https://t.me/manager_spanishschool" target="_blank" class="cta-btn">
+    ✉ Написати в Telegram
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">Escola<span> · Мовна школа</span></div>
+      <p class="footer-about">
+        Онлайн-школа іспанської та англійської мови Олесі Лилак-Чижович. Створена для українців, які хочуть вивчати мову легко, практично й із підтримкою — де б вони не знаходились.
+      </p>
+    </div>
+    <div>
+      <div class="footer-col-title">Навігація</div>
+      <ul class="footer-links">
+        <li><a href="#about">Про нас</a></li>
+        <li><a href="#features">Що входить</a></li>
+        <li><a href="#pricing">Ціни</a></li>
+        <li><a href="#steps">Як записатися</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Контакти</div>
+      <ul class="footer-links">
+        <li><a href="https://t.me/manager_spanishschool" target="_blank">📩 Telegram (записатися)</a></li>
+        <li><a href="https://www.instagram.com/olesyalylak_official" target="_blank">📸 Instagram Олесі</a></li>
+        <li><a href="https://t.me/IrenLutsenko" target="_blank">💬 @IrenLutsenko (питання)</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Escola — Онлайн-школа Олесі Лилак-Чижович</span>
+    <span class="footer-flags">🇺🇦 🇪🇸 🇬🇧</span>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Pricing tabs
+  function switchLang(lang) {
+    document.querySelectorAll('.pricing-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.pricing-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + lang).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+</body>
+</html>
