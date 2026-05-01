@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spanish Online Academy · Олесі Лилак-Чижович</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange:   #F06B1F;
+      --orange-d: #D45510;
+      --orange-l: #FF8540;
+      --gold:     #F5B800;
+      --gold-l:   #FFCC33;
+      --cream:    #FFF8F3;
+      --sand:     #FDF0E5;
+      --sand-d:   #F5E0CC;
+      --white:    #FFFFFF;
+      --ink:      #2B1500;
+      --muted:    #7A5C40;
+      --border:   #EDD8C4;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 5vw;
+      background: rgba(255,248,243,0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { display: flex; flex-direction: column; line-height: 1; text-decoration: none; }
+    .nav-logo-main { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: var(--orange); }
+    .nav-logo-sub { font-size: 0.58rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+    .nav-right { display: flex; align-items: center; gap: 1.6rem; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; align-items: center; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--orange); }
+
+    /* Language switcher */
+    .lang-switcher { display: flex; gap: 4px; background: var(--sand); border-radius: 8px; padding: 3px; border: 1px solid var(--border); }
+    .lang-btn { padding: 5px 10px; border: none; background: transparent; border-radius: 5px; font-family: 'DM Sans', sans-serif; font-size: 0.72rem; font-weight: 700; color: var(--muted); cursor: pointer; transition: all 0.2s; letter-spacing: 0.05em; }
+    .lang-btn.active { background: var(--orange); color: var(--white); box-shadow: 0 2px 8px rgba(240,107,31,0.3); }
+    .lang-btn:hover:not(.active) { color: var(--orange); }
+
+    .nav-cta { background: var(--orange); color: var(--white); padding: 9px 20px; border-radius: 6px; font-size: 0.82rem; font-weight: 700; text-decoration: none; box-shadow: 0 3px 14px rgba(240,107,31,0.35); transition: background 0.2s, transform 0.2s; white-space: nowrap; }
+    .nav-cta:hover { background: var(--orange-l); transform: translateY(-1px); }
+
+    /* ─── HERO ─── */
+    .hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; padding-top: 72px; }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; display: block; }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(108deg,
+        rgba(27,10,0,0.82) 0%,
+        rgba(27,10,0,0.58) 48%,
+        rgba(27,10,0,0.18) 100%);
+    }
+    .hero-content { position: relative; z-index: 2; padding: 80px 5vw 80px 8vw; max-width: 700px; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(240,107,31,0.22); border: 1px solid rgba(240,107,31,0.5); color: #FFAA70; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 22px; }
+    .hero-academy { font-family: 'Playfair Display', serif; font-size: clamp(0.9rem, 1.5vw, 1.1rem); font-weight: 400; font-style: italic; color: #FFAA70; margin-bottom: 10px; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 4.8vw, 3.8rem); font-weight: 900; color: var(--white); line-height: 1.1; margin-bottom: 20px; }
+    .hero h1 .hl { background: linear-gradient(135deg, var(--gold) 0%, var(--orange-l) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-desc { font-size: 1.02rem; color: rgba(255,255,255,0.8); line-height: 1.72; margin-bottom: 36px; max-width: 490px; }
+    .speak-hl { color: var(--gold); font-weight: 700; background: rgba(245,184,0,0.18); border-bottom: 2px solid var(--gold); padding: 1px 5px; border-radius: 3px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-orange { display: inline-flex; align-items: center; gap: 9px; background: var(--orange); color: var(--white); font-weight: 700; font-size: 0.95rem; padding: 15px 30px; border-radius: 8px; text-decoration: none; box-shadow: 0 4px 22px rgba(240,107,31,0.45); transition: transform 0.2s, box-shadow 0.2s; }
+    .btn-orange:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(240,107,31,0.55); background: var(--orange-l); }
+    .btn-ghost { display: inline-flex; align-items: center; gap: 8px; border: 2px solid rgba(255,255,255,0.35); color: var(--white); font-weight: 600; font-size: 0.92rem; padding: 13px 26px; border-radius: 8px; text-decoration: none; transition: border-color 0.2s, background 0.2s; }
+    .btn-ghost:hover { border-color: var(--gold); background: rgba(245,184,0,0.1); }
+    .hero-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 42px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.14); }
+    .hero-pill { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.88); font-size: 0.76rem; font-weight: 600; padding: 7px 14px; border-radius: 100px; display: flex; align-items: center; gap: 6px; }
+    .hero-pill svg { width: 13px; height: 13px; fill: var(--gold); flex-shrink: 0; }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 88px 6vw; }
+    .sec-label { font-size: 0.67rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange); margin-bottom: 11px; }
+    .sec-title { font-family: 'Playfair Display', serif; font-size: clamp(1.85rem, 3vw, 2.5rem); font-weight: 900; color: var(--ink); line-height: 1.18; margin-bottom: 14px; }
+    .sec-title em { font-style: normal; color: var(--orange); }
+    .sec-desc { color: var(--muted); font-size: 0.98rem; line-height: 1.74; max-width: 540px; }
+
+    /* ─── ABOUT ─── */
+    #about { background: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 5fr 6fr; gap: 72px; align-items: center; margin-top: 56px; }
+    .about-photo-wrap { position: relative; }
+    .about-photo-frame { width: 100%; aspect-ratio: 3/4; border-radius: 22px; overflow: hidden; box-shadow: 0 24px 64px rgba(43,21,0,0.18); }
+    .about-photo-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+    .about-badge { position: absolute; bottom: -16px; right: -16px; background: var(--orange); color: var(--white); padding: 13px 16px; border-radius: 13px; box-shadow: 0 8px 28px rgba(240,107,31,0.4); font-size: 0.76rem; font-weight: 700; line-height: 1.45; text-align: center; z-index: 2; }
+    .about-badge strong { display: block; font-size: 1.05rem; }
+    .about-deco { position: absolute; top: -16px; left: -16px; width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--gold); opacity: 0.4; z-index: 0; }
+    .about-sub { font-size: 0.93rem; color: var(--muted); margin-bottom: 26px; line-height: 1.65; }
+    .about-items { display: flex; flex-direction: column; gap: 16px; }
+    .about-item { display: flex; gap: 14px; align-items: flex-start; }
+    .about-icon { flex-shrink: 0; width: 42px; height: 42px; background: var(--cream); border: 1px solid var(--border); border-radius: 11px; display: flex; align-items: center; justify-content: center; }
+    .about-icon svg { width: 21px; height: 21px; }
+    .about-item-body strong { display: block; font-weight: 700; font-size: 0.9rem; color: var(--ink); margin-bottom: 2px; }
+    .about-item-body span { color: var(--muted); font-size: 0.82rem; line-height: 1.55; }
+    .about-insta { display: inline-flex; align-items: center; gap: 9px; margin-top: 26px; background: var(--orange); color: var(--white); padding: 11px 22px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.88rem; box-shadow: 0 4px 16px rgba(240,107,31,0.3); transition: transform 0.2s; }
+    .about-insta:hover { transform: translateY(-2px); }
+    .about-insta svg { width: 17px; height: 17px; fill: currentColor; }
+
+    /* ─── FEATURES ─── */
+    #features { background: var(--cream); }
+    .feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 52px; }
+    .feat-card { background: var(--white); border: 1px solid var(--border); border-radius: 18px; padding: 28px 24px; transition: transform 0.25s, box-shadow 0.25s; position: relative; overflow: hidden; }
+    .feat-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(43,21,0,0.09); }
+    .feat-icon-wrap { width: 50px; height: 50px; background: var(--sand); border-radius: 13px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .feat-icon-wrap svg { width: 25px; height: 25px; }
+    .feat-card h3 { font-weight: 700; font-size: 0.93rem; color: var(--ink); margin-bottom: 7px; }
+    .feat-card p { color: var(--muted); font-size: 0.83rem; line-height: 1.65; }
+    .feat-accent { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--orange), var(--gold)); transform: scaleX(0); transform-origin: left; transition: transform 0.35s; }
+    .feat-card:hover .feat-accent { transform: scaleX(1); }
+
+    /* ─── PRICING ─── */
+    #pricing { background: var(--sand); }
+    .pricing-wrap { display: flex; gap: 26px; margin-top: 52px; max-width: 800px; }
+    .price-card { flex: 1; background: var(--white); border: 1.5px solid var(--border); border-radius: 22px; padding: 36px 30px 32px; position: relative; transition: transform 0.25s, box-shadow 0.25s; }
+    .price-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(43,21,0,0.11); }
+    .price-card.featured { background: linear-gradient(150deg, var(--orange) 0%, var(--orange-d) 100%); border-color: var(--orange); box-shadow: 0 8px 36px rgba(240,107,31,0.35); }
+    .price-pill { position: absolute; top: -14px; left: 26px; background: var(--gold); color: var(--ink); font-size: 0.67rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 13px; border-radius: 100px; white-space: nowrap; }
+    .price-head { display: flex; align-items: flex-start; gap: 13px; margin-bottom: 20px; }
+    .price-head-icon { width: 48px; height: 48px; border-radius: 13px; background: var(--sand); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .price-card.featured .price-head-icon { background: rgba(255,255,255,0.2); }
+    .price-type { font-size: 0.67rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+    .price-card.featured .price-type { color: rgba(255,255,255,0.68); }
+    .price-name { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--ink); }
+    .price-card.featured .price-name { color: var(--white); }
+    .price-amount { display: flex; align-items: baseline; gap: 3px; margin-bottom: 4px; }
+    .price-val { font-family: 'Playfair Display', serif; font-size: 2.9rem; font-weight: 900; color: var(--orange); line-height: 1; }
+    .price-card.featured .price-val { color: var(--white); }
+    .price-sym { font-size: 1.45rem; font-weight: 700; color: var(--orange); align-self: flex-start; padding-top: 7px; }
+    .price-card.featured .price-sym { color: var(--white); }
+    .price-per { font-size: 0.78rem; color: var(--muted); margin-bottom: 22px; }
+    .price-card.featured .price-per { color: rgba(255,255,255,0.62); }
+    .price-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+    .price-card.featured .price-divider { background: rgba(255,255,255,0.22); }
+    .price-list { list-style: none; display: flex; flex-direction: column; gap: 11px; margin-bottom: 28px; }
+    .price-list li { display: flex; align-items: flex-start; gap: 9px; font-size: 0.83rem; color: var(--ink); line-height: 1.45; }
+    .price-card.featured .price-list li { color: rgba(255,255,255,0.9); }
+    .check { width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px; }
+    .price-btn { display: block; text-align: center; padding: 13px 18px; border-radius: 9px; font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: all 0.2s; background: var(--orange); color: var(--white); box-shadow: 0 4px 14px rgba(240,107,31,0.28); }
+    .price-btn:hover { background: var(--orange-l); transform: translateY(-1px); }
+    .price-card.featured .price-btn { background: var(--white); color: var(--orange); }
+    .price-card.featured .price-btn:hover { background: var(--gold); color: var(--ink); }
+    .pricing-note { margin-top: 26px; padding: 14px 20px; background: var(--white); border: 1px solid var(--border); border-radius: 10px; font-size: 0.83rem; color: var(--muted); line-height: 1.6; max-width: 800px; }
+    .pricing-note strong { color: var(--orange); }
+
+    /* ─── STEPS ─── */
+    #steps { background: var(--white); }
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 52px; }
+    .step-card { text-align: center; }
+    .step-num-wrap { width: 68px; height: 68px; border-radius: 50%; background: var(--cream); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .step-num { font-family: 'Playfair Display', serif; font-size: 1.55rem; font-weight: 900; color: var(--orange); }
+    .step-card h3 { font-weight: 700; font-size: 0.98rem; margin-bottom: 7px; color: var(--ink); }
+    .step-card p { color: var(--muted); font-size: 0.84rem; line-height: 1.65; }
+
+    /* ─── CTA ─── */
+    #cta { background: linear-gradient(135deg, var(--orange-d) 0%, #7A2D00 100%); position: relative; overflow: hidden; text-align: center; padding: 96px 6vw; }
+    #cta::before { content: '¡Vamos!'; position: absolute; font-family: 'Playfair Display', serif; font-size: 18vw; font-weight: 900; color: rgba(255,255,255,0.04); top: 50%; left: 50%; transform: translate(-50%,-50%); white-space: nowrap; pointer-events: none; }
+    .cta-inner { position: relative; z-index: 2; }
+    #cta .sec-label { color: rgba(255,185,80,0.9); }
+    #cta h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 3.8vw, 2.9rem); font-weight: 900; color: var(--white); margin-bottom: 14px; line-height: 1.2; }
+    #cta h2 span { color: var(--gold); }
+    #cta p { color: rgba(255,255,255,0.68); font-size: 0.98rem; max-width: 450px; margin: 0 auto 38px; line-height: 1.72; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: var(--ink); font-weight: 800; font-size: 1rem; padding: 16px 40px; border-radius: 9px; text-decoration: none; box-shadow: 0 6px 28px rgba(245,184,0,0.38); transition: transform 0.2s, box-shadow 0.2s; }
+    .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(245,184,0,0.48); }
+    .cta-btn svg { width: 19px; height: 19px; fill: currentColor; }
+
+    /* ─── FOOTER ─── */
+    footer { background: var(--cream); border-top: 1px solid var(--border); padding: 50px 6vw 28px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 36px; }
+    .footer-logo-main { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 900; color: var(--orange); }
+    .footer-logo-sub { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 2px; margin-bottom: 11px; }
+    .footer-about { color: var(--muted); font-size: 0.83rem; line-height: 1.72; }
+    .footer-col-title { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); margin-bottom: 14px; }
+    .footer-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-list a { color: var(--muted); text-decoration: none; font-size: 0.83rem; transition: color 0.2s; display: flex; align-items: center; gap: 8px; }
+    .footer-list a svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .footer-list a:hover { color: var(--orange); }
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .footer-copy { color: var(--muted); font-size: 0.76rem; }
+    .footer-flags { display: flex; gap: 7px; }
+    .flag-chip { background: var(--white); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; font-size: 0.7rem; font-weight: 700; color: var(--muted); }
+
+    /* ─── REVEAL ─── */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.68s ease, transform 0.68s ease; }
+    .reveal.on { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 920px) {
+      .about-grid, .footer-grid { grid-template-columns: 1fr; }
+      .feat-grid { grid-template-columns: 1fr 1fr; }
+      .pricing-wrap { flex-direction: column; max-width: 420px; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 560px) {
+      .feat-grid { grid-template-columns: 1fr; }
+      section { padding: 66px 5vw; }
+      .hero-content { padding: 60px 5vw; }
+      .lang-switcher { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#home">
+    <div class="nav-logo-main">Spanish Online Academy</div>
+    <div class="nav-logo-sub" data-i18n="nav_sub">Олесі Лилак-Чижович</div>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about" data-i18n="nav_about">Про нас</a></li>
+      <li><a href="#features" data-i18n="nav_course">Курс</a></li>
+      <li><a href="#pricing" data-i18n="nav_prices">Ціни</a></li>
+      <li><a href="#steps" data-i18n="nav_enroll">Запис</a></li>
+    </ul>
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('uk')">UA</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+    </div>
+    <a href="https://t.me/manager_spanishschool" target="_blank" class="nav-cta" data-i18n="nav_cta">Записатися →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <!-- Hero: Olesya's own photo – great background showing the academy -->
+    <img
+      src="olesya.jpg"
+      alt="Spanish Online Academy — Олеся Лилак-Чижович"
+    />
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+      <span data-i18n="hero_eyebrow">Онлайн · Іспанська та Англійська · Сертифікат ECCAEDU</span>
+    </div>
+    <div class="hero-academy">Spanish Online Academy</div>
+    <h1 data-i18n="hero_title">Онлайн-школа іспанської та англійської мови<br><span class="hl">Олесі Лилак-Чижович</span></h1>
+    <p class="hero-desc">
+      <span data-i18n="hero_desc_1">Для українців, які</span>
+      <span class="speak-hl" data-i18n="hero_desc_hl">хочуть говорити впевнено</span>
+      <span data-i18n="hero_desc_2">— не просто вчити правила. Живі заняття, носії мови та визнаний міжнародний сертифікат.</span>
+    </p>
+    <div class="hero-actions">
+      <a href="https://t.me/manager_spanishschool" target="_blank" class="btn-orange">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.95 8.19l-2.01 9.49c-.15.68-.54.84-1.08.52l-3-2.21-1.45 1.4c-.16.16-.3.29-.61.29l.22-3.08 5.61-5.07c.24-.22-.06-.34-.38-.12L6.44 14.5l-2.97-.93c-.64-.2-.66-.64.14-.95l11.63-4.48c.54-.2 1.01.13.71.95z"/></svg>
+        <span data-i18n="hero_btn1">Записатися в Telegram</span>
+      </a>
+      <a href="#features" class="btn-ghost" data-i18n="hero_btn2">Що входить у курс →</a>
+    </div>
+    <div class="hero-pills">
+      <div class="hero-pill">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        <span data-i18n="pill1">До 7 осіб у групі</span>
+      </div>
+      <div class="hero-pill">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>
+        <span data-i18n="pill2">2 заняття на тиждень</span>
+      </div>
+      <div class="hero-pill">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+        <span data-i18n="pill3">Диплом ECCAEDU</span>
+      </div>
+      <div class="hero-pill">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+        <span data-i18n="pill4">Speaking Club з native</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-photo-wrap reveal">
+      <div class="about-photo-frame">
+        <img src="olesya.jpg" alt="Олеся Лилак-Чижович — засновниця Spanish Online Academy" />
+      </div>
+      <div class="about-badge">
+        <strong>🇺🇦 → 🇪🇸</strong>
+        <span data-i18n="about_badge">Канарські острови</span>
+      </div>
+      <div class="about-deco"></div>
+    </div>
+    <div class="reveal">
+      <div class="sec-label" data-i18n="about_label">Засновниця школи</div>
+      <h2 class="sec-title">Олеся<br><em>Лилак-Чижович</em></h2>
+      <p class="about-sub" data-i18n="about_sub">Освітня та громадська діячка. Живе та працює на Канарських островах — і знає, що значить адаптуватись до нової країни та мови.</p>
+      <div class="about-items">
+        <div class="about-item">
+          <div class="about-icon">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="about-item-body">
+            <strong data-i18n="about_item1_title">Президент Асоціації "Дві землі, Два сонця"</strong>
+            <span data-i18n="about_item1_desc">Підтримує інтеграцію та адаптацію українців в Іспанії і на Канарах</span>
+          </div>
+        </div>
+        <div class="about-item">
+          <div class="about-icon">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+          </div>
+          <div class="about-item-body">
+            <strong data-i18n="about_item2_title">Представниця ТПП України на Канарах</strong>
+            <span data-i18n="about_item2_desc">Розвиває ділові зв'язки між Україною та Іспанією</span>
+          </div>
+        </div>
+        <div class="about-item">
+          <div class="about-icon">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="about-item-body">
+            <strong data-i18n="about_item3_title">Радник Омбудсмена України</strong>
+            <span data-i18n="about_item3_desc">Захищає права та інтереси українців за кордоном</span>
+          </div>
+        </div>
+        <div class="about-item">
+          <div class="about-icon">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <div class="about-item-body">
+            <strong data-i18n="about_item4_title">Школа створена для українців</strong>
+            <span data-i18n="about_item4_desc">Щоб швидко й ефективно опанувати мову — живучи в Іспанії або Україні</span>
+          </div>
+        </div>
+      </div>
+      <a href="https://www.instagram.com/olesyalylak_official" target="_blank" class="about-insta">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        <span data-i18n="about_insta">Instagram Олесі</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="reveal">
+    <div class="sec-label" data-i18n="feat_label">Що входить у курс</div>
+    <h2 class="sec-title" data-i18n="feat_title">Все для <em>реального</em> результату</h2>
+    <p class="sec-desc" data-i18n="feat_desc">Кожен студент отримує повний набір інструментів — від інтерактивної платформи до живої практики з носієм мови.</p>
+  </div>
+  <div class="feat-grid">
+    <div class="feat-card reveal">
+      <div class="feat-icon-wrap"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <h3 data-i18n="f1_title">Групи до 7 осіб</h3>
+      <p data-i18n="f1_desc">Невеликі групи забезпечують увагу від викладача та активну розмовну практику кожного заняття.</p>
+      <div class="feat-accent"></div>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon-wrap"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+      <h3 data-i18n="f2_title">Професійні викладачі</h3>
+      <p data-i18n="f2_desc">Досвідчені педагоги поєднують сучасні методики з живою атмосферою та практичним підходом.</p>
+      <div class="feat-accent"></div>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon-wrap"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <h3 data-i18n="f3_title">Диплом ECCAEDU</h3>
+      <p data-i18n="f3_desc">Міжнародний сертифікат після екзамену — визнаний у Європі. Включений у кожен пакет.</p>
+      <div class="feat-accent"></div>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon-wrap"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+      <h3 data-i18n="f4_title">Інтерактивна LMS</h3>
+      <p data-i18n="f4_desc">Онлайн-платформа з відеоуроками, домашніми завданнями та відстеженням прогресу.</p>
+      <div class="feat-accent"></div>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon-wrap"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+      <h3 data-i18n="f5_title">Speaking Club з native</h3>
+      <p data-i18n="f5_desc">Безкоштовний клуб живого спілкування з носієм мови — 1 раз на тиждень для всіх студентів.</p>
+      <div class="feat-accent"></div>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon-wrap"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+      <h3 data-i18n="f6_title">Зустрічі про Іспанію</h3>
+      <p data-i18n="f6_desc">Щомісячні онлайн-зустрічі з Олесею про реальне життя і можливості на Канарських островах.</p>
+      <div class="feat-accent"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="reveal">
+    <div class="sec-label" data-i18n="price_label">Тарифи</div>
+    <h2 class="sec-title" data-i18n="price_title">Оберіть свій <em>формат</em></h2>
+    <p class="sec-desc" data-i18n="price_desc">Груповий або індивідуальний — в обох пакетах ви отримаєте міжнародний диплом ECCAEDU та повний доступ до матеріалів.</p>
+  </div>
+  <div class="pricing-wrap reveal">
+    <!-- GROUP -->
+    <div class="price-card">
+      <div class="price-head">
+        <div class="price-head-icon"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div>
+          <div class="price-type" data-i18n="price_lang">Іспанська · Англійська</div>
+          <div class="price-name" data-i18n="price_group_name">Груповий</div>
+        </div>
+      </div>
+      <div class="price-amount"><span class="price-sym">€</span><span class="price-val">10</span></div>
+      <div class="price-per" data-i18n="price_group_per">за одне заняття · група до 7 осіб</div>
+      <div class="price-divider"></div>
+      <ul class="price-list">
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pg1">Група до 7 осіб</span></li>
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pg2">2 заняття на тиждень (55 хв)</span></li>
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><strong data-i18n="pg3">Диплом ECCAEDU після екзамену</strong></li>
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pg4">Доступ до LMS та матеріалів</span></li>
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pg5">Speaking Club безкоштовно</span></li>
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pg6">Щомісячні зустрічі з Олесею</span></li>
+      </ul>
+      <a href="https://t.me/manager_spanishschool" target="_blank" class="price-btn" data-i18n="price_btn">Записатися →</a>
+    </div>
+    <!-- INDIVIDUAL -->
+    <div class="price-card featured">
+      <div class="price-pill" data-i18n="price_pill">Максимальний прогрес</div>
+      <div class="price-head">
+        <div class="price-head-icon"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div>
+          <div class="price-type" data-i18n="price_lang">Іспанська · Англійська</div>
+          <div class="price-name" data-i18n="price_ind_name">Індивідуальний</div>
+        </div>
+      </div>
+      <div class="price-amount"><span class="price-sym">€</span><span class="price-val">12</span></div>
+      <div class="price-per" data-i18n="price_ind_per">за одне заняття · персональна програма</div>
+      <div class="price-divider"></div>
+      <ul class="price-list">
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pi1">Заняття 1 на 1 з викладачем</span></li>
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pi2">Гнучкий графік та темп</span></li>
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><strong data-i18n="pi3">Диплом ECCAEDU після екзамену</strong></li>
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pi4">Доступ до LMS та матеріалів</span></li>
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pi5">Speaking Club безкоштовно</span></li>
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pi6">Щомісячні зустрічі з Олесею</span></li>
+      </ul>
+      <a href="https://t.me/manager_spanishschool" target="_blank" class="price-btn" data-i18n="price_btn">Записатися →</a>
+    </div>
+  </div>
+  <div class="pricing-note reveal">
+    <strong data-i18n="price_note_title">Потрібна консультація?</strong> <span data-i18n="price_note_desc">Напишіть нам у Telegram-бот — підберемо мову, рівень та зручний час. Усі заняття тривають 55 хвилин, 2 рази на тиждень.</span>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section id="steps">
+  <div class="reveal" style="max-width:520px">
+    <div class="sec-label" data-i18n="steps_label">Як розпочати</div>
+    <h2 class="sec-title" data-i18n="steps_title">Три кроки до<br><em>першого уроку</em></h2>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card reveal">
+      <div class="step-num-wrap"><div class="step-num">1</div></div>
+      <h3 data-i18n="s1_title">Напишіть нам</h3>
+      <p data-i18n="s1_desc">Перейдіть до Telegram-бота і залиште заявку. Менеджер відповість швидко та відповість на всі питання.</p>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-num-wrap"><div class="step-num">2</div></div>
+      <h3 data-i18n="s2_title">Оберіть формат</h3>
+      <p data-i18n="s2_desc">Разом визначимо мову, рівень, пакет (груповий або індивідуальний) і зручний графік занять.</p>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-num-wrap"><div class="step-num">3</div></div>
+      <h3 data-i18n="s3_title">¡Vamos! Починаємо</h3>
+      <p data-i18n="s3_desc">Після підтвердження та оплати — доступ до LMS і перший урок. Просто та зручно.</p>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:50px" class="reveal">
+    <a href="https://t.me/manager_spanishschool" target="_blank" class="btn-orange" style="font-size:1rem;padding:15px 42px">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.95 8.19l-2.01 9.49c-.15.68-.54.84-1.08.52l-3-2.21-1.45 1.4c-.16.16-.3.29-.61.29l.22-3.08 5.61-5.07c.24-.22-.06-.34-.38-.12L6.44 14.5l-2.97-.93c-.64-.2-.66-.64.14-.95l11.63-4.48c.54-.2 1.01.13.71.95z"/></svg>
+      <span data-i18n="steps_btn">Написати в Telegram-бот</span>
+    </a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-inner">
+    <div class="sec-label" data-i18n="cta_label">Починай зараз</div>
+    <h2><span data-i18n="cta_title1">Говори</span> <span class="gold" style="color:var(--gold)" data-i18n="cta_title2">іспанською</span><br><span data-i18n="cta_title3">вже цього місяця</span></h2>
+    <p data-i18n="cta_desc">Приєднуйся до спільноти українців, які вчаться впевнено говорити — і відкривають нові можливості в Іспанії та по всьому світу.</p>
+    <a href="https://t.me/manager_spanishschool" target="_blank" class="cta-btn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.95 8.19l-2.01 9.49c-.15.68-.54.84-1.08.52l-3-2.21-1.45 1.4c-.16.16-.3.29-.61.29l.22-3.08 5.61-5.07c.24-.22-.06-.34-.38-.12L6.44 14.5l-2.97-.93c-.64-.2-.66-.64.14-.95l11.63-4.48c.54-.2 1.01.13.71.95z"/></svg>
+      <span data-i18n="cta_btn">Записатися в Telegram-бот</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo-main">Spanish Online Academy</div>
+      <div class="footer-logo-sub" data-i18n="footer_sub">Онлайн-школа Олесі Лилак-Чижович</div>
+      <p class="footer-about" data-i18n="footer_about">Онлайн-школа іспанської та англійської мови для українців. Сучасні методики, маленькі групи, живе спілкування та міжнародний сертифікат ECCAEDU.</p>
+    </div>
+    <div>
+      <div class="footer-col-title" data-i18n="footer_nav">Навігація</div>
+      <ul class="footer-list">
+        <li><a href="#about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span data-i18n="nav_about">Про нас</span></a></li>
+        <li><a href="#features"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><span data-i18n="nav_course">Курс</span></a></li>
+        <li><a href="#pricing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg><span data-i18n="nav_prices">Ціни</span></a></li>
+        <li><a href="#steps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span data-i18n="nav_enroll">Запис</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title" data-i18n="footer_contacts">Контакти</div>
+      <ul class="footer-list">
+        <li><a href="https://t.me/manager_spanishschool" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.95 8.19l-2.01 9.49c-.15.68-.54.84-1.08.52l-3-2.21-1.45 1.4c-.16.16-.3.29-.61.29l.22-3.08 5.61-5.07c.24-.22-.06-.34-.38-.12L6.44 14.5l-2.97-.93c-.64-.2-.66-.64.14-.95l11.63-4.48c.54-.2 1.01.13.71.95z"/></svg>
+          <span data-i18n="footer_tg1">Telegram-бот (записатися)</span>
+        </a></li>
+        <li><a href="https://www.instagram.com/olesyalylak_official" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span data-i18n="footer_ig">Instagram Олесі</span>
+        </a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Spanish Online Academy · Олеся Лилак-Чижович</span>
+    <div class="footer-flags">
+      <div class="flag-chip">🇺🇦 UA</div>
+      <div class="flag-chip">🇪🇸 ES</div>
+      <div class="flag-chip">🇬🇧 EN</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ─── TRANSLATIONS ───────────────────────────────────────────
+const i18n = {
+  uk: {
+    nav_sub: "Олесі Лилак-Чижович",
+    nav_about: "Про нас", nav_course: "Курс", nav_prices: "Ціни", nav_enroll: "Запис", nav_cta: "Записатися →",
+    hero_eyebrow: "Онлайн · Іспанська та Англійська · Сертифікат ECCAEDU",
+    hero_title: "Онлайн-школа іспанської та англійської мови<br><span class='hl'>Олесі Лилак-Чижович</span>",
+    hero_desc_1: "Для українців, які", hero_desc_hl: "хочуть говорити впевнено",
+    hero_desc_2: "— не просто вчити правила. Живі заняття, носії мови та визнаний міжнародний сертифікат.",
+    hero_btn1: "Записатися в Telegram", hero_btn2: "Що входить у курс →",
+    pill1: "До 7 осіб у групі", pill2: "2 заняття на тиждень", pill3: "Диплом ECCAEDU", pill4: "Speaking Club з native",
+    about_label: "Засновниця школи", about_badge: "Канарські острови",
+    about_sub: "Освітня та громадська діячка. Живе та працює на Канарських островах — і знає, що значить адаптуватись до нової країни та мови.",
+    about_item1_title: "Президент Асоціації \"Дві землі, Два сонця\"", about_item1_desc: "Підтримує інтеграцію та адаптацію українців в Іспанії і на Канарах",
+    about_item2_title: "Представниця ТПП України на Канарах", about_item2_desc: "Розвиває ділові зв'язки між Україною та Іспанією",
+    about_item3_title: "Радник Омбудсмена України", about_item3_desc: "Захищає права та інтереси українців за кордоном",
+    about_item4_title: "Школа створена для українців", about_item4_desc: "Щоб швидко й ефективно опанувати мову — живучи в Іспанії або Україні",
+    about_insta: "Instagram Олесі",
+    feat_label: "Що входить у курс", feat_title: "Все для <em>реального</em> результату",
+    feat_desc: "Кожен студент отримує повний набір інструментів — від інтерактивної платформи до живої практики з носієм мови.",
+    f1_title: "Групи до 7 осіб", f1_desc: "Невеликі групи забезпечують увагу від викладача та активну розмовну практику кожного заняття.",
+    f2_title: "Професійні викладачі", f2_desc: "Досвідчені педагоги поєднують сучасні методики з живою атмосферою та практичним підходом.",
+    f3_title: "Диплом ECCAEDU", f3_desc: "Міжнародний сертифікат після екзамену — визнаний у Європі. Включений у кожен пакет.",
+    f4_title: "Інтерактивна LMS", f4_desc: "Онлайн-платформа з відеоуроками, домашніми завданнями та відстеженням прогресу.",
+    f5_title: "Speaking Club з native", f5_desc: "Безкоштовний клуб живого спілкування з носієм мови — 1 раз на тиждень для всіх студентів.",
+    f6_title: "Зустрічі про Іспанію", f6_desc: "Щомісячні онлайн-зустрічі з Олесею про реальне життя і можливості на Канарських островах.",
+    price_label: "Тарифи", price_title: "Оберіть свій <em>формат</em>",
+    price_desc: "Груповий або індивідуальний — в обох пакетах ви отримаєте міжнародний диплом ECCAEDU та повний доступ до матеріалів.",
+    price_lang: "Іспанська · Англійська", price_group_name: "Груповий", price_group_per: "за одне заняття · група до 7 осіб",
+    price_ind_name: "Індивідуальний", price_ind_per: "за одне заняття · персональна програма",
+    price_pill: "Максимальний прогрес",
+    pg1:"Група до 7 осіб", pg2:"2 заняття на тиждень (55 хв)", pg3:"Диплом ECCAEDU після екзамену", pg4:"Доступ до LMS та матеріалів", pg5:"Speaking Club безкоштовно", pg6:"Щомісячні зустрічі з Олесею",
+    pi1:"Заняття 1 на 1 з викладачем", pi2:"Гнучкий графік та темп", pi3:"Диплом ECCAEDU після екзамену", pi4:"Доступ до LMS та матеріалів", pi5:"Speaking Club безкоштовно", pi6:"Щомісячні зустрічі з Олесею",
+    price_btn: "Записатися →",
+    price_note_title: "Потрібна консультація?", price_note_desc: "Напишіть нам у Telegram-бот — підберемо мову, рівень та зручний час. Усі заняття тривають 55 хвилин, 2 рази на тиждень.",
+    steps_label: "Як розпочати", steps_title: "Три кроки до<br><em>першого уроку</em>",
+    s1_title:"Напишіть нам", s1_desc:"Перейдіть до Telegram-бота і залиште заявку. Менеджер відповість швидко та відповість на всі питання.",
+    s2_title:"Оберіть формат", s2_desc:"Разом визначимо мову, рівень, пакет (груповий або індивідуальний) і зручний графік занять.",
+    s3_title:"¡Vamos! Починаємо", s3_desc:"Після підтвердження та оплати — доступ до LMS і перший урок. Просто та зручно.",
+    steps_btn: "Написати в Telegram-бот",
+    cta_label:"Починай зараз", cta_title1:"Говори", cta_title2:"іспанською", cta_title3:"вже цього місяця",
+    cta_desc:"Приєднуйся до спільноти українців, які вчаться впевнено говорити — і відкривають нові можливості в Іспанії та по всьому світу.",
+    cta_btn:"Записатися в Telegram-бот",
+    footer_sub:"Онлайн-школа Олесі Лилак-Чижович",
+    footer_about:"Онлайн-школа іспанської та англійської мови для українців. Сучасні методики, маленькі групи, живе спілкування та міжнародний сертифікат ECCAEDU.",
+    footer_nav:"Навігація", footer_contacts:"Контакти",
+    footer_tg1:"Telegram-бот (записатися)", footer_ig:"Instagram Олесі",
+  },
+  en: {
+    nav_sub: "by Olesya Lylak-Chyzhovich",
+    nav_about: "About", nav_course: "Course", nav_prices: "Pricing", nav_enroll: "Enroll", nav_cta: "Sign Up →",
+    hero_eyebrow: "Online · Spanish & English · ECCAEDU Certificate",
+    hero_title: "Online School of Spanish<br>& English by <span class='hl'>Olesya Lylak-Chyzhovich</span>",
+    hero_desc_1: "For Ukrainians who", hero_desc_hl: "want to speak with confidence",
+    hero_desc_2: "— not just learn grammar rules. Live lessons, native speakers, and an internationally recognized certificate.",
+    hero_btn1: "Sign Up via Telegram", hero_btn2: "What's included →",
+    pill1: "Up to 7 per group", pill2: "2 lessons per week", pill3: "ECCAEDU Diploma", pill4: "Speaking Club with native",
+    about_label: "School Founder", about_badge: "Canary Islands",
+    about_sub: "Public figure and educator. Lives and works in the Canary Islands — she knows firsthand what it means to adapt to a new country and language.",
+    about_item1_title: "President of the Association \"Two Lands, Two Suns\"", about_item1_desc: "Supports the integration and adaptation of Ukrainians in Spain and the Canaries",
+    about_item2_title: "Representative of the Ukrainian Chamber of Commerce in the Canaries", about_item2_desc: "Develops business ties between Ukraine and Spain",
+    about_item3_title: "Advisor to the Ukrainian Ombudsman", about_item3_desc: "Protects the rights and interests of Ukrainians abroad",
+    about_item4_title: "School created for Ukrainians", about_item4_desc: "To master the language quickly and effectively — whether living in Spain or Ukraine",
+    about_insta: "Olesya's Instagram",
+    feat_label: "What's included", feat_title: "Everything for <em>real</em> results",
+    feat_desc: "Every student gets a full set of tools — from an interactive platform to live practice with a native speaker.",
+    f1_title: "Groups up to 7", f1_desc: "Small groups ensure personal attention from the teacher and active speaking practice every lesson.",
+    f2_title: "Professional teachers", f2_desc: "Experienced educators combine modern methods with a friendly atmosphere and practical approach.",
+    f3_title: "ECCAEDU Diploma", f3_desc: "International certificate after the exam — recognized across Europe. Included in every package.",
+    f4_title: "Interactive LMS", f4_desc: "Online platform with video lessons, homework assignments, and personal progress tracking.",
+    f5_title: "Speaking Club with native", f5_desc: "Free live conversation club with a native speaker — once a week for all students.",
+    f6_title: "Spain Life Meetups", f6_desc: "Monthly online meetings with Olesya about real life and opportunities in the Canary Islands.",
+    price_label: "Pricing", price_title: "Choose your <em>format</em>",
+    price_desc: "Group or individual — both packages include the international ECCAEDU diploma and full access to all materials.",
+    price_lang: "Spanish · English", price_group_name: "Group", price_group_per: "per lesson · group up to 7 people",
+    price_ind_name: "Individual", price_ind_per: "per lesson · personal program",
+    price_pill: "Maximum progress",
+    pg1:"Group up to 7 people", pg2:"2 lessons per week (55 min)", pg3:"ECCAEDU Diploma after exam", pg4:"LMS access & materials", pg5:"Speaking Club for free", pg6:"Monthly meetups with Olesya",
+    pi1:"1-on-1 lessons with a teacher", pi2:"Flexible schedule & pace", pi3:"ECCAEDU Diploma after exam", pi4:"LMS access & materials", pi5:"Speaking Club for free", pi6:"Monthly meetups with Olesya",
+    price_btn: "Sign Up →",
+    price_note_title: "Need a consultation?", price_note_desc: "Message our Telegram bot — we'll find the right language, level, and schedule for you. All lessons are 55 minutes, twice a week.",
+    steps_label: "How to start", steps_title: "Three steps to<br><em>your first lesson</em>",
+    s1_title:"Write to us", s1_desc:"Go to our Telegram bot and leave a request. Our manager will respond quickly and answer all questions.",
+    s2_title:"Choose your format", s2_desc:"Together we'll determine the language, level, package (group or individual), and a convenient schedule.",
+    s3_title:"¡Vamos! Let's start", s3_desc:"After confirmation and payment — LMS access and your first lesson. Simple and easy.",
+    steps_btn: "Message the Telegram Bot",
+    cta_label:"Start now", cta_title1:"Speak", cta_title2:"Spanish", cta_title3:"starting this month",
+    cta_desc:"Join a community of Ukrainians learning to speak with confidence — and opening new opportunities in Spain and around the world.",
+    cta_btn:"Sign Up via Telegram Bot",
+    footer_sub:"by Olesya Lylak-Chyzhovich",
+    footer_about:"Online school of Spanish and English for Ukrainians. Modern methods, small groups, live communication and the international ECCAEDU certificate.",
+    footer_nav:"Navigation", footer_contacts:"Contacts",
+    footer_tg1:"Telegram Bot (sign up)", footer_ig:"Olesya's Instagram",
+  },
+  es: {
+    nav_sub: "de Olesya Lylak-Chyzhovich",
+    nav_about: "Sobre nosotros", nav_course: "Curso", nav_prices: "Precios", nav_enroll: "Inscripción", nav_cta: "Inscribirse →",
+    hero_eyebrow: "Online · Español e Inglés · Certificado ECCAEDU",
+    hero_title: "Escuela online de español e inglés<br>de <span class='hl'>Olesya Lylak-Chyzhovich</span>",
+    hero_desc_1: "Para ucranianos que", hero_desc_hl: "quieren hablar con confianza",
+    hero_desc_2: "— no solo aprender reglas. Clases en vivo, hablantes nativos y certificado internacional reconocido.",
+    hero_btn1: "Inscribirse en Telegram", hero_btn2: "¿Qué incluye el curso? →",
+    pill1: "Hasta 7 por grupo", pill2: "2 clases por semana", pill3: "Diploma ECCAEDU", pill4: "Speaking Club con nativo",
+    about_label: "Fundadora de la escuela", about_badge: "Islas Canarias",
+    about_sub: "Activista cívica y educadora. Vive y trabaja en las Islas Canarias — y sabe de primera mano lo que significa adaptarse a un nuevo país e idioma.",
+    about_item1_title: "Presidenta de la Asociación \"Dos Tierras, Dos Soles\"", about_item1_desc: "Apoya la integración y adaptación de ucranianos en España y Canarias",
+    about_item2_title: "Representante de la Cámara de Comercio de Ucrania en Canarias", about_item2_desc: "Desarrolla vínculos comerciales entre Ucrania y España",
+    about_item3_title: "Asesora del Defensor del Pueblo de Ucrania", about_item3_desc: "Protege los derechos e intereses de los ucranianos en el extranjero",
+    about_item4_title: "Escuela creada para ucranianos", about_item4_desc: "Para dominar el idioma de forma rápida y efectiva — viviendo en España o Ucrania",
+    about_insta: "Instagram de Olesya",
+    feat_label: "Qué incluye el curso", feat_title: "Todo para <em>resultados reales</em>",
+    feat_desc: "Cada estudiante recibe un conjunto completo de herramientas — desde una plataforma interactiva hasta práctica en vivo con un hablante nativo.",
+    f1_title: "Grupos de hasta 7", f1_desc: "Los grupos pequeños garantizan atención del profesor y práctica oral activa en cada clase.",
+    f2_title: "Profesores profesionales", f2_desc: "Docentes experimentados combinan métodos modernos con un ambiente amigable y enfoque práctico.",
+    f3_title: "Diploma ECCAEDU", f3_desc: "Certificado internacional tras el examen — reconocido en Europa. Incluido en cada paquete.",
+    f4_title: "LMS interactivo", f4_desc: "Plataforma online con videolecciones, tareas y seguimiento del progreso personal.",
+    f5_title: "Speaking Club con nativo", f5_desc: "Club de conversación en vivo gratuito con un hablante nativo — una vez por semana para todos los alumnos.",
+    f6_title: "Encuentros sobre España", f6_desc: "Reuniones online mensuales con Olesya sobre la vida real y las oportunidades en las Islas Canarias.",
+    price_label: "Tarifas", price_title: "Elige tu <em>formato</em>",
+    price_desc: "Grupal o individual — ambos paquetes incluyen el diploma internacional ECCAEDU y acceso completo a los materiales.",
+    price_lang: "Español · Inglés", price_group_name: "Grupal", price_group_per: "por clase · grupo hasta 7 personas",
+    price_ind_name: "Individual", price_ind_per: "por clase · programa personalizado",
+    price_pill: "Máximo progreso",
+    pg1:"Grupo hasta 7 personas", pg2:"2 clases por semana (55 min)", pg3:"Diploma ECCAEDU tras el examen", pg4:"Acceso LMS y materiales", pg5:"Speaking Club gratis", pg6:"Reuniones mensuales con Olesya",
+    pi1:"Clases 1 a 1 con el profesor", pi2:"Horario y ritmo flexible", pi3:"Diploma ECCAEDU tras el examen", pi4:"Acceso LMS y materiales", pi5:"Speaking Club gratis", pi6:"Reuniones mensuales con Olesya",
+    price_btn: "Inscribirse →",
+    price_note_title: "¿Necesitas una consulta?", price_note_desc: "Escríbenos al bot de Telegram — encontraremos el idioma, nivel y horario adecuados para ti. Todas las clases duran 55 minutos, dos veces por semana.",
+    steps_label: "Cómo empezar", steps_title: "Tres pasos a<br><em>tu primera clase</em>",
+    s1_title:"Escríbenos", s1_desc:"Ve al bot de Telegram y deja tu solicitud. El manager responderá rápido y resolverá todas tus dudas.",
+    s2_title:"Elige tu formato", s2_desc:"Juntos definiremos el idioma, nivel, paquete (grupal o individual) y el horario más conveniente.",
+    s3_title:"¡Vamos! Empezamos", s3_desc:"Tras la confirmación y el pago — acceso al LMS y tu primera clase. Simple y cómodo.",
+    steps_btn: "Escribir al bot de Telegram",
+    cta_label:"Empieza ya", cta_title1:"Habla", cta_title2:"español", cta_title3:"desde este mes",
+    cta_desc:"Únete a una comunidad de ucranianos que aprenden a hablar con confianza — y abren nuevas oportunidades en España y en todo el mundo.",
+    cta_btn:"Inscribirse en el bot de Telegram",
+    footer_sub:"de Olesya Lylak-Chyzhovich",
+    footer_about:"Escuela online de español e inglés para ucranianos. Métodos modernos, grupos pequeños, conversación en vivo y el certificado internacional ECCAEDU.",
+    footer_nav:"Navegación", footer_contacts:"Contacto",
+    footer_tg1:"Bot de Telegram (inscripción)", footer_ig:"Instagram de Olesya",
+  }
+};
+
+let currentLang = 'uk';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang === 'uk' ? 'uk' : lang === 'en' ? 'en' : 'es';
+  const t = i18n[lang];
+
+  // Update all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) {
+      el.innerHTML = t[key];
+    }
+  });
+
+  // Update lang buttons
+  document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+}
+
+// ─── SCROLL REVEAL ───────────────────────────────────────────
+const els = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      const siblings = [...e.target.parentElement.querySelectorAll('.reveal')];
+      const idx = siblings.indexOf(e.target);
+      setTimeout(() => e.target.classList.add('on'), idx * 80);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+els.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
