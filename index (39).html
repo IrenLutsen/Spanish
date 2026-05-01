@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Lingua Sol Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --or:#F06B1F;--or-d:#C84E08;--or-l:#FF8840;
+  --gold:#F5B800;--gold-l:#FFCC33;
+  --cream:#FFF8F3;--sand:#FDF0E5;--sand-d:#F0DEC8;
+  --white:#fff;--ink:#2B1500;--muted:#7A5C40;--border:#EDD8C4;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;
+  display:flex;align-items:center;justify-content:space-between;padding:13px 5vw;
+  background:rgba(255,248,243,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-logo{text-decoration:none;line-height:1}
+.nav-logo-main{font-family:'Playfair Display',serif;font-size:1.12rem;font-weight:900;color:var(--or)}
+.nav-logo-sub{font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.nav-right{display:flex;align-items:center;gap:1.3rem}
+.nav-links{display:flex;gap:1.4rem;list-style:none;align-items:center}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.79rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--or)}
+
+/* language switcher */
+.lang-sw{display:flex;gap:3px;background:var(--sand);border-radius:8px;padding:3px;border:1px solid var(--border)}
+.lang-btn{padding:5px 11px;border:none;background:transparent;border-radius:5px;
+  font-family:'DM Sans',sans-serif;font-size:.71rem;font-weight:700;color:var(--muted);
+  cursor:pointer;transition:all .2s;letter-spacing:.05em}
+.lang-btn.active{background:var(--or);color:#fff;box-shadow:0 2px 8px rgba(240,107,31,.3)}
+.lang-btn:hover:not(.active){color:var(--or)}
+
+.nav-cta{background:var(--or);color:#fff;padding:8px 18px;border-radius:6px;font-size:.82rem;
+  font-weight:700;text-decoration:none;box-shadow:0 3px 14px rgba(240,107,31,.35);
+  transition:background .2s,transform .2s;white-space:nowrap}
+.nav-cta:hover{background:var(--or-l);transform:translateY(-1px)}
+
+/* ── HERO ── */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding-top:72px}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block}
+.hero-bg::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(108deg,rgba(27,10,0,.86) 0%,rgba(27,10,0,.6) 48%,rgba(27,10,0,.22) 100%)}
+.hero-content{position:relative;z-index:2;padding:80px 5vw 80px 8vw;max-width:700px}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;
+  background:rgba(240,107,31,.2);border:1px solid rgba(240,107,31,.5);color:#FFAA70;
+  font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  padding:6px 16px;border-radius:100px;margin-bottom:22px}
+.hero-academy{font-family:'Playfair Display',serif;font-size:clamp(.9rem,1.4vw,1.08rem);
+  font-style:italic;color:#FFAA70;margin-bottom:10px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.3rem,4.5vw,3.7rem);
+  font-weight:900;color:#fff;line-height:1.1;margin-bottom:20px}
+.hl{background:linear-gradient(135deg,var(--gold) 0%,var(--or-l) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:1rem;color:rgba(255,255,255,.82);line-height:1.74;margin-bottom:34px;max-width:490px}
+.speak-hl{color:var(--gold);font-weight:700;background:rgba(245,184,0,.18);
+  border-bottom:2px solid var(--gold);padding:1px 5px;border-radius:3px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn-or{display:inline-flex;align-items:center;gap:8px;background:var(--or);color:#fff;
+  font-weight:700;font-size:.93rem;padding:14px 28px;border-radius:8px;text-decoration:none;
+  box-shadow:0 4px 22px rgba(240,107,31,.45);transition:transform .2s,box-shadow .2s}
+.btn-or:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(240,107,31,.55);background:var(--or-l)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;border:2px solid rgba(255,255,255,.35);
+  color:#fff;font-weight:600;font-size:.9rem;padding:12px 24px;border-radius:8px;
+  text-decoration:none;transition:border-color .2s,background .2s}
+.btn-ghost:hover{border-color:var(--gold);background:rgba(245,184,0,.1)}
+.hero-pills{display:flex;gap:9px;flex-wrap:wrap;margin-top:40px;padding-top:30px;
+  border-top:1px solid rgba(255,255,255,.13)}
+.hero-pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  color:rgba(255,255,255,.88);font-size:.75rem;font-weight:600;padding:6px 13px;
+  border-radius:100px;display:flex;align-items:center;gap:6px}
+.hero-pill svg{width:13px;height:13px;fill:var(--gold);flex-shrink:0}
+
+/* ── SECTIONS ── */
+section{padding:86px 6vw}
+.sec-label{font-size:.67rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--or);margin-bottom:11px}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.45rem);
+  font-weight:900;color:var(--ink);line-height:1.18;margin-bottom:14px}
+.sec-title em{font-style:normal;color:var(--or)}
+.sec-desc{color:var(--muted);font-size:.97rem;line-height:1.74;max-width:540px}
+
+/* ── ABOUT ── */
+#about{background:var(--white)}
+.about-grid{display:grid;grid-template-columns:5fr 6fr;gap:70px;align-items:center;margin-top:54px}
+.about-photo-wrap{position:relative}
+.about-photo-frame{width:100%;aspect-ratio:3/4;border-radius:22px;overflow:hidden;
+  box-shadow:0 24px 64px rgba(43,21,0,.18)}
+.about-photo-frame img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.about-badge{position:absolute;bottom:-15px;right:-15px;background:var(--or);color:#fff;
+  padding:12px 15px;border-radius:13px;box-shadow:0 8px 28px rgba(240,107,31,.4);
+  font-size:.74rem;font-weight:700;line-height:1.45;text-align:center;z-index:2}
+.about-badge strong{display:block;font-size:1rem}
+.about-deco{position:absolute;top:-15px;left:-15px;width:85px;height:85px;border-radius:50%;
+  border:3px solid var(--gold);opacity:.38;z-index:0}
+.about-sub{font-size:.92rem;color:var(--muted);margin-bottom:24px;line-height:1.66}
+.about-items{display:flex;flex-direction:column;gap:15px}
+.about-item{display:flex;gap:13px;align-items:flex-start}
+.aico{flex-shrink:0;width:42px;height:42px;background:var(--cream);border:1px solid var(--border);
+  border-radius:11px;display:flex;align-items:center;justify-content:center}
+.aico svg{width:20px;height:20px}
+.about-item-body strong{display:block;font-weight:700;font-size:.88rem;color:var(--ink);margin-bottom:2px}
+.about-item-body span{color:var(--muted);font-size:.81rem;line-height:1.55}
+.about-insta{display:inline-flex;align-items:center;gap:8px;margin-top:24px;background:var(--or);
+  color:#fff;padding:11px 21px;border-radius:8px;text-decoration:none;font-weight:700;
+  font-size:.87rem;box-shadow:0 4px 16px rgba(240,107,31,.3);transition:transform .2s}
+.about-insta:hover{transform:translateY(-2px)}
+.about-insta svg{width:17px;height:17px;fill:currentColor}
+
+/* ── FEATURES ── */
+#features{background:var(--cream)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:19px;margin-top:50px}
+.feat-card{background:var(--white);border:1px solid var(--border);border-radius:18px;
+  padding:27px 23px;transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden}
+.feat-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(43,21,0,.09)}
+.feat-icon{width:49px;height:49px;background:var(--sand);border-radius:13px;
+  display:flex;align-items:center;justify-content:center;margin-bottom:15px}
+.feat-icon svg{width:24px;height:24px}
+.feat-card h3{font-weight:700;font-size:.92rem;color:var(--ink);margin-bottom:7px}
+.feat-card p{color:var(--muted);font-size:.82rem;line-height:1.65}
+.feat-line{position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--or),var(--gold));
+  transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.feat-card:hover .feat-line{transform:scaleX(1)}
+
+/* ── PRICING ── */
+#pricing{background:var(--sand)}
+.course-tabs{display:flex;gap:4px;background:rgba(255,255,255,.7);border-radius:12px;
+  padding:4px;margin:44px 0 32px;width:fit-content;border:1px solid var(--border)}
+.ctab{padding:10px 28px;border-radius:9px;font-weight:700;font-size:.83rem;cursor:pointer;
+  border:none;color:var(--muted);background:transparent;transition:all .25s;
+  letter-spacing:.03em;font-family:'DM Sans',sans-serif;white-space:nowrap}
+.ctab.active{background:var(--or);color:#fff;box-shadow:0 3px 12px rgba(240,107,31,.3)}
+.ctab:hover:not(.active){color:var(--or)}
+.course-panel{display:none}
+.course-panel.active{display:block}
+.price-wrap{display:flex;gap:24px;max-width:780px}
+.pc{flex:1;background:var(--white);border:1.5px solid var(--border);border-radius:22px;
+  padding:34px 28px 30px;position:relative;transition:transform .25s,box-shadow .25s}
+.pc:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(43,21,0,.11)}
+.pc.feat{background:linear-gradient(150deg,var(--or) 0%,var(--or-d) 100%);
+  border-color:var(--or);box-shadow:0 8px 36px rgba(240,107,31,.35)}
+.pc-pill{position:absolute;top:-13px;left:24px;background:var(--gold);color:var(--ink);
+  font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 13px;border-radius:100px;white-space:nowrap}
+.pc-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:19px}
+.pc-hico{width:46px;height:46px;border-radius:13px;background:var(--sand);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center}
+.pc.feat .pc-hico{background:rgba(255,255,255,.2)}
+.pc-type{font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:3px}
+.pc.feat .pc-type{color:rgba(255,255,255,.65)}
+.pc-name{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--ink)}
+.pc.feat .pc-name{color:#fff}
+.pc-amount{display:flex;align-items:baseline;gap:3px;margin-bottom:4px}
+.pc-val{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:var(--or);line-height:1}
+.pc.feat .pc-val{color:#fff}
+.pc-sym{font-size:1.4rem;font-weight:700;color:var(--or);align-self:flex-start;padding-top:7px}
+.pc.feat .pc-sym{color:#fff}
+.pc-per{font-size:.77rem;color:var(--muted);margin-bottom:21px}
+.pc.feat .pc-per{color:rgba(255,255,255,.62)}
+.pc-div{height:1px;background:var(--border);margin-bottom:19px}
+.pc.feat .pc-div{background:rgba(255,255,255,.22)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:26px}
+.pc-list li{display:flex;align-items:flex-start;gap:9px;font-size:.82rem;color:var(--ink);line-height:1.45}
+.pc.feat .pc-list li{color:rgba(255,255,255,.9)}
+.chk{width:16px;height:16px;flex-shrink:0;margin-top:1px}
+.pc-btn{display:block;text-align:center;padding:12px 18px;border-radius:9px;font-weight:700;
+  font-size:.88rem;text-decoration:none;transition:all .2s;
+  background:var(--or);color:#fff;box-shadow:0 4px 14px rgba(240,107,31,.28)}
+.pc-btn:hover{background:var(--or-l);transform:translateY(-1px)}
+.pc.feat .pc-btn{background:#fff;color:var(--or)}
+.pc.feat .pc-btn:hover{background:var(--gold);color:var(--ink)}
+.price-note{margin-top:24px;padding:13px 20px;background:var(--white);border:1px solid var(--border);
+  border-radius:10px;font-size:.82rem;color:var(--muted);line-height:1.6;max-width:780px}
+.price-note strong{color:var(--or)}
+
+/* ── STEPS ── */
+#steps{background:var(--white)}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:50px}
+.step-card{text-align:center}
+.step-num-w{width:66px;height:66px;border-radius:50%;background:var(--cream);border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 19px}
+.step-num{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--or)}
+.step-card h3{font-weight:700;font-size:.96rem;margin-bottom:7px;color:var(--ink)}
+.step-card p{color:var(--muted);font-size:.83rem;line-height:1.65}
+
+/* ── CTA ── */
+#cta{background:linear-gradient(135deg,var(--or-d) 0%,#7A2D00 100%);
+  position:relative;overflow:hidden;text-align:center;padding:94px 6vw}
+#cta::before{content:'¡Vamos!';position:absolute;font-family:'Playfair Display',serif;
+  font-size:18vw;font-weight:900;color:rgba(255,255,255,.03);top:50%;left:50%;
+  transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none}
+.cta-in{position:relative;z-index:2}
+#cta .sec-label{color:rgba(255,185,80,.9)}
+#cta h2{font-family:'Playfair Display',serif;font-size:clamp(1.85rem,3.7vw,2.85rem);
+  font-weight:900;color:#fff;margin-bottom:14px;line-height:1.2}
+#cta h2 .gold{color:var(--gold)}
+#cta p{color:rgba(255,255,255,.68);font-size:.97rem;max-width:440px;margin:0 auto 36px;line-height:1.74}
+.cta-btn{display:inline-flex;align-items:center;gap:9px;background:var(--gold);color:var(--ink);
+  font-weight:800;font-size:.98rem;padding:15px 38px;border-radius:9px;text-decoration:none;
+  box-shadow:0 6px 28px rgba(245,184,0,.38);transition:transform .2s,box-shadow .2s}
+.cta-btn:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(245,184,0,.48)}
+.cta-btn svg{width:18px;height:18px;fill:currentColor}
+
+/* ── FOOTER ── */
+footer{background:var(--cream);border-top:1px solid var(--border);padding:48px 6vw 26px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:46px;margin-bottom:34px}
+.fl-main{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;color:var(--or)}
+.fl-sub{font-size:.61rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-top:2px;margin-bottom:10px}
+.fl-about{color:var(--muted);font-size:.82rem;line-height:1.74}
+.fc-title{font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink);margin-bottom:13px}
+.fl{list-style:none;display:flex;flex-direction:column;gap:9px}
+.fl a{color:var(--muted);text-decoration:none;font-size:.82rem;transition:color .2s;
+  display:flex;align-items:center;gap:8px}
+.fl a svg{width:13px;height:13px;flex-shrink:0}
+.fl a:hover{color:var(--or)}
+.footer-bot{border-top:1px solid var(--border);padding-top:19px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.footer-copy{color:var(--muted);font-size:.75rem}
+.footer-flags{display:flex;gap:7px}
+.flag-chip{background:var(--white);border:1px solid var(--border);border-radius:6px;
+  padding:3px 9px;font-size:.69rem;font-weight:700;color:var(--muted)}
+
+/* ── REVEAL ── */
+.rev{opacity:0;transform:translateY(25px);transition:opacity .66s ease,transform .66s ease}
+.rev.on{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:920px){
+  .about-grid,.footer-grid{grid-template-columns:1fr}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .price-wrap{flex-direction:column;max-width:400px}
+  .steps-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+@media(max-width:560px){
+  .feat-grid{grid-template-columns:1fr}
+  section{padding:64px 5vw}
+  .hero-content{padding:58px 5vw}
+  .lang-sw{display:none}
+  .course-tabs{flex-direction:column;width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#home">
+    <div class="nav-logo-main">Lingua Sol Academy</div>
+    <div class="nav-logo-sub" data-k="nav_sub">Олесі Лилак-Чижович</div>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about" data-k="nav_about">Про нас</a></li>
+      <li><a href="#features" data-k="nav_course">Курс</a></li>
+      <li><a href="#pricing" data-k="nav_prices">Ціни</a></li>
+      <li><a href="#steps" data-k="nav_enroll">Запис</a></li>
+    </ul>
+    <div class="lang-sw">
+      <button class="lang-btn active" data-lang="uk">UA</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="es">ES</button>
+    </div>
+    <a href="https://t.me/manager_spanishschool" target="_blank" class="nav-cta" data-k="nav_cta">Записатися →</a>
+  </div>
+</nav>
+
+<!-- HERO: generic online-learning background, NO photo of Olesya -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <img
+      src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1800&auto=format&fit=crop&q=85"
+      alt="Online language learning"
+      onerror="this.src='https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1800&auto=format&fit=crop&q=85'"
+    />
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+      <span data-k="hero_ey">Онлайн · Іспанська, Англійська, Українська · Сертифікат ECCAEDU</span>
+    </div>
+    <div class="hero-academy">Lingua Sol Academy</div>
+    <h1 data-k="hero_h1" data-html="1">Онлайн-школа іспанської,<br>англійської та української мови<br><span class="hl">Олесі Лилак-Чижович</span></h1>
+    <p class="hero-desc">
+      <span data-k="hd1">Для українців, які</span>
+      <span class="speak-hl" data-k="hd_hl">хочуть говорити впевнено</span>
+      <span data-k="hd2">— не просто вчити правила. Живі заняття, носії мови та визнаний міжнародний сертифікат.</span>
+    </p>
+    <div class="hero-actions">
+      <a href="https://t.me/manager_spanishschool" target="_blank" class="btn-or">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.95 8.19l-2.01 9.49c-.15.68-.54.84-1.08.52l-3-2.21-1.45 1.4c-.16.16-.3.29-.61.29l.22-3.08 5.61-5.07c.24-.22-.06-.34-.38-.12L6.44 14.5l-2.97-.93c-.64-.2-.66-.64.14-.95l11.63-4.48c.54-.2 1.01.13.71.95z"/></svg>
+        <span data-k="hero_b1">Записатися в Telegram</span>
+      </a>
+      <a href="#features" class="btn-ghost" data-k="hero_b2">Що входить у курс →</a>
+    </div>
+    <div class="hero-pills">
+      <div class="hero-pill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg><span data-k="pill1">До 7 осіб у групі</span></div>
+      <div class="hero-pill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg><span data-k="pill2">2 заняття на тиждень</span></div>
+      <div class="hero-pill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg><span data-k="pill3">Диплом ECCAEDU</span></div>
+      <div class="hero-pill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/></svg><span data-k="pill4">Живе спілкування</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT: Olesya's photo ONLY here -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-photo-wrap rev">
+      <div class="about-photo-frame">
+        <img src="olesya.jpg" alt="Олеся Лилак-Чижович — засновниця Lingua Sol Academy"/>
+      </div>
+      <div class="about-badge"><strong>🇺🇦 → 🇪🇸</strong><br><span data-k="ab_badge">Канарські острови</span></div>
+      <div class="about-deco"></div>
+    </div>
+    <div class="rev">
+      <div class="sec-label" data-k="ab_label">Засновниця школи</div>
+      <h2 class="sec-title">Олеся<br><em>Лилак-Чижович</em></h2>
+      <p class="about-sub" data-k="ab_sub">Освітня та громадська діячка. Живе та працює на Канарських островах — і знає, що значить адаптуватись до нової країни та мови.</p>
+      <div class="about-items">
+        <div class="about-item">
+          <div class="aico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <div class="about-item-body"><strong data-k="ai1t">Президент Асоціації "Дві землі, Два сонця"</strong><span data-k="ai1d">Підтримує інтеграцію та адаптацію українців в Іспанії і на Канарах</span></div>
+        </div>
+        <div class="about-item">
+          <div class="aico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div>
+          <div class="about-item-body"><strong data-k="ai2t">Представниця ТПП України на Канарах</strong><span data-k="ai2d">Розвиває ділові зв'язки між Україною та Іспанією</span></div>
+        </div>
+        <div class="about-item">
+          <div class="aico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="about-item-body"><strong data-k="ai3t">Радник Омбудсмена України</strong><span data-k="ai3d">Захищає права та інтереси українців за кордоном</span></div>
+        </div>
+        <div class="about-item">
+          <div class="aico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <div class="about-item-body"><strong data-k="ai4t">Школа створена для українців</strong><span data-k="ai4d">Щоб швидко й ефективно опанувати мову — живучи в Іспанії або Україні</span></div>
+        </div>
+      </div>
+      <a href="https://www.instagram.com/olesyalylak_official" target="_blank" class="about-insta">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        <span data-k="ab_ig">Instagram Олесі</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="rev">
+    <div class="sec-label" data-k="feat_label">Що входить у курс</div>
+    <h2 class="sec-title"><span data-k="feat_t1">Все для</span> <em data-k="feat_t2">реального</em> <span data-k="feat_t3">результату</span></h2>
+    <p class="sec-desc" data-k="feat_desc">Кожен студент отримує повний набір інструментів — від інтерактивної платформи до живої практики з носієм мови.</p>
+  </div>
+  <div class="feat-grid">
+    <div class="feat-card rev">
+      <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <h3 data-k="f1t">Групи до 7 осіб</h3><p data-k="f1d">Невеликі групи забезпечують увагу від викладача та активну розмовну практику кожного заняття.</p>
+      <div class="feat-line"></div>
+    </div>
+    <div class="feat-card rev">
+      <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+      <h3 data-k="f2t">Професійні викладачі</h3><p data-k="f2d">Досвідчені педагоги поєднують сучасні методики з живою атмосферою та практичним підходом.</p>
+      <div class="feat-line"></div>
+    </div>
+    <div class="feat-card rev">
+      <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <h3 data-k="f3t">Диплом ECCAEDU</h3><p data-k="f3d">Міжнародний сертифікат після екзамену — визнаний у Європі. Включений у кожен пакет.</p>
+      <div class="feat-line"></div>
+    </div>
+    <div class="feat-card rev">
+      <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+      <h3 data-k="f4t">Інтерактивна LMS</h3><p data-k="f4d">Онлайн-платформа з відеоуроками, домашніми завданнями та відстеженням прогресу.</p>
+      <div class="feat-line"></div>
+    </div>
+    <div class="feat-card rev">
+      <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586M3 4a2 2 0 012-2h8a2 2 0 012 2v6a2 2 0 01-2 2H9l-4 4V4z"/></svg></div>
+      <h3 data-k="f5t">Жива розмовна практика</h3><p data-k="f5d">Кожне заняття — це не лише теорія, а активне спілкування та відпрацювання мовних навичок у реальних ситуаціях.</p>
+      <div class="feat-line"></div>
+    </div>
+    <div class="feat-card rev">
+      <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+      <h3 data-k="f6t">Зустрічі про Іспанію</h3><p data-k="f6d">Щомісячні онлайн-зустрічі з Олесею про реальне життя і можливості на Канарських островах.</p>
+      <div class="feat-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="rev">
+    <div class="sec-label" data-k="pr_label">Тарифи</div>
+    <h2 class="sec-title"><span data-k="pr_t1">Оберіть</span> <em data-k="pr_t2">мову та формат</em></h2>
+    <p class="sec-desc" data-k="pr_desc">Оберіть мову — і груповий або індивідуальний формат. У кожному пакеті є міжнародний диплом ECCAEDU та повний доступ до матеріалів.</p>
+  </div>
+
+  <!-- Course tabs -->
+  <div class="course-tabs">
+    <button class="ctab active" data-course="es" data-k="ctab_es">🇪🇸 Іспанська</button>
+    <button class="ctab"        data-course="en" data-k="ctab_en">🇬🇧 Англійська</button>
+    <button class="ctab"        data-course="ua" data-k="ctab_ua">🇺🇦 Українська</button>
+  </div>
+
+  <!-- SPANISH: group €10, individual €12 -->
+  <div class="course-panel active" id="panel-es">
+    <div class="price-wrap rev">
+      <div class="pc">
+        <div class="pc-head">
+          <div class="pc-hico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <div><div class="pc-type" data-k="es_flag">🇪🇸 Іспанська мова</div><div class="pc-name" data-k="grp_name">Груповий</div></div>
+        </div>
+        <div class="pc-amount"><span class="pc-sym">€</span><span class="pc-val">10</span></div>
+        <div class="pc-per" data-k="grp_per">за одне заняття · група до 7 осіб</div>
+        <div class="pc-div"></div>
+        <ul class="pc-list">
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_g1">Група до 7 осіб</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_g2">2 заняття на тиждень (55 хв)</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><strong data-k="li_g3">Диплом ECCAEDU після екзамену</strong></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_g4">Доступ до LMS та матеріалів</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_g6">Щомісячні зустрічі з Олесею</span></li>
+        </ul>
+        <a href="https://t.me/manager_spanishschool" target="_blank" class="pc-btn" data-k="pr_btn">Записатися →</a>
+      </div>
+      <div class="pc feat">
+        <div class="pc-pill" data-k="ind_pill">Максимальний прогрес</div>
+        <div class="pc-head">
+          <div class="pc-hico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div><div class="pc-type" data-k="es_flag">🇪🇸 Іспанська мова</div><div class="pc-name" data-k="ind_name">Індивідуальний</div></div>
+        </div>
+        <div class="pc-amount"><span class="pc-sym">€</span><span class="pc-val">12</span></div>
+        <div class="pc-per" data-k="ind_per">за одне заняття · персональна програма</div>
+        <div class="pc-div"></div>
+        <ul class="pc-list">
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_i1">Заняття 1 на 1 з викладачем</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_i2">Гнучкий графік та темп</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><strong data-k="li_i3">Диплом ECCAEDU після екзамену</strong></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_i4">Доступ до LMS та матеріалів</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_i6">Щомісячні зустрічі з Олесею</span></li>
+        </ul>
+        <a href="https://t.me/manager_spanishschool" target="_blank" class="pc-btn" data-k="pr_btn">Записатися →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENGLISH: group €10, individual €12 -->
+  <div class="course-panel" id="panel-en">
+    <div class="price-wrap rev">
+      <div class="pc">
+        <div class="pc-head">
+          <div class="pc-hico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <div><div class="pc-type" data-k="en_flag">🇬🇧 Англійська мова</div><div class="pc-name" data-k="grp_name">Груповий</div></div>
+        </div>
+        <div class="pc-amount"><span class="pc-sym">€</span><span class="pc-val">10</span></div>
+        <div class="pc-per" data-k="grp_per">за одне заняття · група до 7 осіб</div>
+        <div class="pc-div"></div>
+        <ul class="pc-list">
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_g1">Група до 7 осіб</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_g2">2 заняття на тиждень (55 хв)</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_g4">Доступ до LMS та матеріалів</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_g6">Щомісячні зустрічі з Олесею</span></li>
+        </ul>
+        <a href="https://t.me/manager_spanishschool" target="_blank" class="pc-btn" data-k="pr_btn">Записатися →</a>
+      </div>
+      <div class="pc feat">
+        <div class="pc-pill" data-k="ind_pill">Максимальний прогрес</div>
+        <div class="pc-head">
+          <div class="pc-hico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div><div class="pc-type" data-k="en_flag">🇬🇧 Англійська мова</div><div class="pc-name" data-k="ind_name">Індивідуальний</div></div>
+        </div>
+        <div class="pc-amount"><span class="pc-sym">€</span><span class="pc-val">12</span></div>
+        <div class="pc-per" data-k="ind_per">за одне заняття · персональна програма</div>
+        <div class="pc-div"></div>
+        <ul class="pc-list">
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_i1">Заняття 1 на 1 з викладачем</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_i2">Гнучкий графік та темп</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_i4">Доступ до LMS та матеріалів</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_i6">Щомісячні зустрічі з Олесею</span></li>
+        </ul>
+        <a href="https://t.me/manager_spanishschool" target="_blank" class="pc-btn" data-k="pr_btn">Записатися →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- UKRAINIAN: group €12, individual €14 -->
+  <div class="course-panel" id="panel-ua">
+    <div class="price-wrap rev">
+      <div class="pc">
+        <div class="pc-head">
+          <div class="pc-hico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <div><div class="pc-type" data-k="ua_flag">🇺🇦 Українська мова</div><div class="pc-name" data-k="grp_name">Груповий</div></div>
+        </div>
+        <div class="pc-amount"><span class="pc-sym">€</span><span class="pc-val">12</span></div>
+        <div class="pc-per" data-k="grp_per">за одне заняття · група до 7 осіб</div>
+        <div class="pc-div"></div>
+        <ul class="pc-list">
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_g1">Група до 7 осіб</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_g2">2 заняття на тиждень (55 хв)</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_g4">Доступ до LMS та матеріалів</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_g6">Щомісячні зустрічі з Олесею</span></li>
+        </ul>
+        <a href="https://t.me/manager_spanishschool" target="_blank" class="pc-btn" data-k="pr_btn">Записатися →</a>
+      </div>
+      <div class="pc feat">
+        <div class="pc-pill" data-k="ind_pill">Максимальний прогрес</div>
+        <div class="pc-head">
+          <div class="pc-hico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div><div class="pc-type" data-k="ua_flag">🇺🇦 Українська мова</div><div class="pc-name" data-k="ind_name">Індивідуальний</div></div>
+        </div>
+        <div class="pc-amount"><span class="pc-sym">€</span><span class="pc-val">14</span></div>
+        <div class="pc-per" data-k="ind_per">за одне заняття · персональна програма</div>
+        <div class="pc-div"></div>
+        <ul class="pc-list">
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_i1">Заняття 1 на 1 з викладачем</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_i2">Гнучкий графік та темп</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_i4">Доступ до LMS та матеріалів</span></li>
+          <li><svg class="chk" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-k="li_i6">Щомісячні зустрічі з Олесею</span></li>
+        </ul>
+        <a href="https://t.me/manager_spanishschool" target="_blank" class="pc-btn" data-k="pr_btn">Записатися →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="price-note rev">
+    <strong data-k="pn_title">Потрібна консультація?</strong>
+    <span data-k="pn_desc"> Напишіть нам у Telegram-бот — підберемо мову, рівень та зручний час. Усі заняття тривають 55 хвилин, 2 рази на тиждень.</span>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section id="steps">
+  <div class="rev" style="max-width:510px">
+    <div class="sec-label" data-k="st_label">Як розпочати</div>
+    <h2 class="sec-title"><span data-k="st_t1">Три кроки до</span><br><em data-k="st_t2">першого уроку</em></h2>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card rev"><div class="step-num-w"><div class="step-num">1</div></div><h3 data-k="s1t">Напишіть нам</h3><p data-k="s1d">Перейдіть до Telegram-бота і залиште заявку. Менеджер відповість швидко та відповість на всі питання.</p></div>
+    <div class="step-card rev"><div class="step-num-w"><div class="step-num">2</div></div><h3 data-k="s2t">Оберіть формат</h3><p data-k="s2d">Разом визначимо мову, рівень, пакет (груповий або індивідуальний) і зручний графік занять.</p></div>
+    <div class="step-card rev"><div class="step-num-w"><div class="step-num">3</div></div><h3 data-k="s3t">¡Vamos! Починаємо</h3><p data-k="s3d">Після підтвердження та оплати — доступ до LMS і перший урок. Просто та зручно.</p></div>
+  </div>
+  <div style="text-align:center;margin-top:48px" class="rev">
+    <a href="https://t.me/manager_spanishschool" target="_blank" class="btn-or" style="font-size:.98rem;padding:14px 40px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.95 8.19l-2.01 9.49c-.15.68-.54.84-1.08.52l-3-2.21-1.45 1.4c-.16.16-.3.29-.61.29l.22-3.08 5.61-5.07c.24-.22-.06-.34-.38-.12L6.44 14.5l-2.97-.93c-.64-.2-.66-.64.14-.95l11.63-4.48c.54-.2 1.01.13.71.95z"/></svg>
+      <span data-k="st_btn">Написати в Telegram-бот</span>
+    </a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-in">
+    <div class="sec-label" data-k="cta_label">Починай зараз</div>
+    <h2><span data-k="cta_h1">Говори</span> <span class="gold" data-k="cta_h2">мовою своїх мрій</span><br><span data-k="cta_h3">вже цього місяця</span></h2>
+    <p data-k="cta_p">Приєднуйся до спільноти українців, які вчаться впевнено говорити — і відкривають нові можливості в Іспанії та по всьому світу.</p>
+    <a href="https://t.me/manager_spanishschool" target="_blank" class="cta-btn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.95 8.19l-2.01 9.49c-.15.68-.54.84-1.08.52l-3-2.21-1.45 1.4c-.16.16-.3.29-.61.29l.22-3.08 5.61-5.07c.24-.22-.06-.34-.38-.12L6.44 14.5l-2.97-.93c-.64-.2-.66-.64.14-.95l11.63-4.48c.54-.2 1.01.13.71.95z"/></svg>
+      <span data-k="cta_btn">Записатися в Telegram-бот</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="fl-main">Lingua Sol Academy</div>
+      <div class="fl-sub">Олесі Лилак-Чижович</div>
+      <p class="fl-about" data-k="ft_about">Онлайн-школа іспанської, англійської та української мов. Сучасні методики, маленькі групи, живе спілкування та міжнародний сертифікат ECCAEDU.</p>
+    </div>
+    <div>
+      <div class="fc-title" data-k="ft_nav">Навігація</div>
+      <ul class="fl">
+        <li><a href="#about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span data-k="nav_about">Про нас</span></a></li>
+        <li><a href="#features"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><span data-k="nav_course">Курс</span></a></li>
+        <li><a href="#pricing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg><span data-k="nav_prices">Ціни</span></a></li>
+        <li><a href="#steps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span data-k="nav_enroll">Запис</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fc-title" data-k="ft_cnt">Контакти</div>
+      <ul class="fl">
+        <li><a href="https://t.me/manager_spanishschool" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.95 8.19l-2.01 9.49c-.15.68-.54.84-1.08.52l-3-2.21-1.45 1.4c-.16.16-.3.29-.61.29l.22-3.08 5.61-5.07c.24-.22-.06-.34-.38-.12L6.44 14.5l-2.97-.93c-.64-.2-.66-.64.14-.95l11.63-4.48c.54-.2 1.01.13.71.95z"/></svg>
+          <span data-k="ft_tg">Telegram-бот (записатися)</span>
+        </a></li>
+        <li><a href="https://www.instagram.com/olesyalylak_official" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span data-k="ft_ig">Instagram Олесі</span>
+        </a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bot">
+    <span class="footer-copy">© 2025 Lingua Sol Academy · Олеся Лилак-Чижович</span>
+    <div class="footer-flags"><div class="flag-chip">🇺🇦 UA</div><div class="flag-chip">🇪🇸 ES</div><div class="flag-chip">🇬🇧 EN</div></div>
+  </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════
+//  TRANSLATIONS  (key → { uk, en, es })
+// ═══════════════════════════════════════════════════
+var TR = {
+  nav_sub:    { uk:'іспанська · англійська · українська',  en:'Spanish · English · Ukrainian',  es:'Español · Inglés · Ucraniano' },
+  nav_about:  { uk:'Про нас',   en:'About',        es:'Sobre nosotros' },
+  nav_course: { uk:'Курс',      en:'Course',       es:'Curso' },
+  nav_prices: { uk:'Ціни',      en:'Pricing',      es:'Precios' },
+  nav_enroll: { uk:'Запис',     en:'Enroll',       es:'Inscripción' },
+  nav_cta:    { uk:'Записатися →', en:'Sign Up →', es:'Inscribirse →' },
+  hero_ey:    { uk:'Онлайн · Іспанська · Англійська · Українська',
+                en:'Online · Spanish · English · Ukrainian',
+                es:'Online · Español · Inglés · Ucraniano' },
+  hero_h1:    { uk:'Онлайн-школа іспанської,<br>англійської та української мови<br><span class="hl">Олесі Лилак-Чижович</span>',
+                en:'Online School of Spanish,<br>English & Ukrainian<br><span class="hl">by Olesya Lylak-Chyzhovich</span>',
+                es:'Escuela online de español,<br>inglés y ucraniano<br><span class="hl">de Olesya Lylak-Chyzhovich</span>' },
+  hd1:        { uk:'Для українців, які', en:'For Ukrainians who', es:'Para ucranianos que' },
+  hd_hl:      { uk:'хочуть говорити впевнено', en:'want to speak with confidence', es:'quieren hablar con confianza' },
+  hd2:        { uk:'— не просто вчити правила. Живі заняття, носії мови та визнаний міжнародний сертифікат.',
+                en:'— not just learn grammar rules. Live lessons, native speakers, and an internationally recognized certificate.',
+                es:'— no solo aprender reglas. Clases en vivo, hablantes nativos y certificado internacional reconocido.' },
+  hero_b1:    { uk:'Записатися в Telegram', en:'Sign Up via Telegram', es:'Inscribirse en Telegram' },
+  hero_b2:    { uk:'Що входить у курс →', en:"What's included →", es:'¿Qué incluye el curso? →' },
+  pill1:      { uk:'До 7 осіб у групі',     en:'Up to 7 per group',      es:'Hasta 7 por grupo' },
+  pill2:      { uk:'2 заняття на тиждень',  en:'2 lessons per week',     es:'2 clases por semana' },
+  pill3:      { uk:'Диплом ECCAEDU (іспанська)',  en:'ECCAEDU Diploma (Spanish)', es:'Diploma ECCAEDU (español)' },
+  pill4:      { uk:'Живе спілкування',            en:'Live conversation practice', es:'Práctica oral en vivo' },
+  ab_label:   { uk:'Засновниця школи',       en:'School Founder',         es:'Fundadora de la escuela' },
+  ab_badge:   { uk:'Канарські острови',      en:'Canary Islands',         es:'Islas Canarias' },
+  ab_sub:     { uk:'Освітня та громадська діячка. Живе та працює на Канарських островах — і знає, що значить адаптуватись до нової країни та мови.',
+                en:'Public figure and educator. Lives and works in the Canary Islands — and knows firsthand what it means to adapt to a new country.',
+                es:'Activista cívica y educadora. Vive y trabaja en las Islas Canarias y sabe lo que significa adaptarse a un nuevo país.' },
+  ai1t:{ uk:'Президент Асоціації "Дві землі, Два сонця"', en:'President of "Two Lands, Two Suns" Association', es:'Presidenta de la Asociación "Dos Tierras, Dos Soles"' },
+  ai1d:{ uk:'Підтримує інтеграцію та адаптацію українців в Іспанії і на Канарах', en:'Supports the integration of Ukrainians in Spain and the Canaries', es:'Apoya la integración de ucranianos en España y Canarias' },
+  ai2t:{ uk:'Представниця ТПП України на Канарах', en:'Representative of Ukrainian Chamber of Commerce in the Canaries', es:'Representante de la Cámara de Comercio de Ucrania en Canarias' },
+  ai2d:{ uk:'Розвиває ділові зв\'язки між Україною та Іспанією', en:'Develops business ties between Ukraine and Spain', es:'Desarrolla vínculos comerciales entre Ucrania y España' },
+  ai3t:{ uk:'Радник Омбудсмена України',    en:'Advisor to the Ukrainian Ombudsman',    es:'Asesora del Defensor del Pueblo de Ucrania' },
+  ai3d:{ uk:'Захищає права та інтереси українців за кордоном', en:'Protects the rights of Ukrainians abroad', es:'Protege los derechos de los ucranianos en el extranjero' },
+  ai4t:{ uk:'Школа створена для українців', en:'School created for Ukrainians', es:'Escuela creada para ucranianos' },
+  ai4d:{ uk:'Щоб швидко й ефективно опанувати мову — живучи в Іспанії або Україні', en:'To master the language quickly — in Spain or Ukraine', es:'Para dominar el idioma rápidamente — en España o Ucrania' },
+  ab_ig:{ uk:'Instagram Олесі', en:"Olesya's Instagram", es:'Instagram de Olesya' },
+  feat_label:{ uk:'Що входить у курс', en:"What's included", es:'Qué incluye el curso' },
+  feat_t1:{ uk:'Все для', en:'Everything for', es:'Todo para' },
+  feat_t2:{ uk:'реального', en:'real', es:'resultados reales' },
+  feat_t3:{ uk:'результату', en:'results', es:'' },
+  feat_desc:{ uk:'Кожен студент отримує повний набір інструментів — від інтерактивної платформи до живої практики з носієм мови.',
+              en:'Every student gets a full set of tools — from an interactive platform to live practice with a native speaker.',
+              es:'Cada estudiante recibe un conjunto completo de herramientas — desde una plataforma interactiva hasta práctica con un nativo.' },
+  f1t:{ uk:'Групи до 7 осіб',          en:'Groups up to 7',           es:'Grupos de hasta 7' },
+  f1d:{ uk:'Невеликі групи забезпечують увагу від викладача та активну розмовну практику кожного заняття.',
+        en:'Small groups ensure personal attention and active speaking practice every lesson.',
+        es:'Los grupos pequeños garantizan atención del profesor y práctica oral activa.' },
+  f2t:{ uk:'Професійні викладачі',     en:'Professional teachers',    es:'Profesores profesionales' },
+  f2d:{ uk:'Досвідчені педагоги поєднують сучасні методики з живою атмосферою та практичним підходом.',
+        en:'Experienced educators combine modern methods with a friendly atmosphere and practical approach.',
+        es:'Docentes experimentados combinan métodos modernos con un ambiente amigable.' },
+  f3t:{ uk:'Диплом ECCAEDU (іспанська)',  en:'ECCAEDU Diploma (Spanish)',  es:'Diploma ECCAEDU (español)' },
+  f3d:{ uk:'Міжнародний сертифікат після іспиту — визнаний у Європі. Доступний для курсу іспанської мови.',
+        en:'International certificate after the exam — recognized in Europe. Available for the Spanish course.',
+        es:'Certificado internacional — reconocido en Europa. Disponible para el curso de español.' },
+  f4t:{ uk:'Інтерактивна LMS',          en:'Interactive LMS',          es:'LMS interactivo' },
+  f4d:{ uk:'Онлайн-платформа з відеоуроками, домашніми завданнями та відстеженням прогресу.',
+        en:'Online platform with video lessons, homework, and personal progress tracking.',
+        es:'Plataforma online con videolecciones, tareas y seguimiento del progreso.' },
+  f5t:{ uk:'Жива розмовна практика',    en:'Live conversation practice', es:'Práctica oral en vivo' },
+  f5d:{ uk:'Кожне заняття — це не лише теорія, а активне спілкування та відпрацювання мовних навичок у реальних ситуаціях.',
+        en:'Every lesson is not just theory — it\'s active communication and real-life language practice.',
+        es:'Cada clase es práctica activa de comunicación en situaciones reales, no solo teoría.' },
+  f6t:{ uk:'Зустрічі про Іспанію',     en:'Spain Life Meetups',        es:'Encuentros sobre España' },
+  f6d:{ uk:'Щомісячні онлайн-зустрічі з Олесею про реальне життя і можливості на Канарських островах.',
+        en:'Monthly online meetings with Olesya about life and opportunities in the Canary Islands.',
+        es:'Reuniones mensuales con Olesya sobre la vida en las Islas Canarias.' },
+  pr_label:{ uk:'Тарифи',              en:'Pricing',                   es:'Tarifas' },
+  pr_t1:   { uk:'Оберіть',             en:'Choose your',               es:'Elige tu' },
+  pr_t2:   { uk:'мову та формат',      en:'language & format',         es:'idioma y formato' },
+  pr_desc: { uk:'Оберіть мову — і груповий або індивідуальний формат. Для іспанської також видається міжнародний диплом ECCAEDU.',
+             en:'Choose a language and group or individual format. The Spanish course also includes the international ECCAEDU diploma.',
+             es:'Elige un idioma y el formato grupal o individual. El curso de español incluye además el diploma ECCAEDU.' },
+  ctab_es: { uk:'🇪🇸 Іспанська',       en:'🇪🇸 Spanish',               es:'🇪🇸 Español' },
+  ctab_en: { uk:'🇬🇧 Англійська',      en:'🇬🇧 English',               es:'🇬🇧 Inglés' },
+  ctab_ua: { uk:'🇺🇦 Українська',      en:'🇺🇦 Ukrainian',             es:'🇺🇦 Ucraniano' },
+  es_flag: { uk:'🇪🇸 Іспанська мова',  en:'🇪🇸 Spanish language',      es:'🇪🇸 Idioma español' },
+  en_flag: { uk:'🇬🇧 Англійська мова', en:'🇬🇧 English language',      es:'🇬🇧 Idioma inglés' },
+  ua_flag: { uk:'🇺🇦 Українська мова', en:'🇺🇦 Ukrainian language',    es:'🇺🇦 Idioma ucraniano' },
+  grp_name:{ uk:'Груповий',            en:'Group',                     es:'Grupal' },
+  grp_per: { uk:'за одне заняття · група до 7 осіб', en:'per lesson · group up to 7 people', es:'por clase · grupo hasta 7 personas' },
+  ind_name:{ uk:'Індивідуальний',      en:'Individual',                es:'Individual' },
+  ind_per: { uk:'за одне заняття · персональна програма', en:'per lesson · personal program', es:'por clase · programa personalizado' },
+  ind_pill:{ uk:'Максимальний прогрес', en:'Maximum progress',         es:'Máximo progreso' },
+  li_g1:{ uk:'Група до 7 осіб',         en:'Group up to 7 people',     es:'Grupo hasta 7 personas' },
+  li_g2:{ uk:'2 заняття на тиждень (55 хв)', en:'2 lessons per week (55 min)', es:'2 clases por semana (55 min)' },
+  li_g3:{ uk:'Диплом ECCAEDU після екзамену', en:'ECCAEDU Diploma after exam', es:'Diploma ECCAEDU tras el examen' },
+  li_g4:{ uk:'Доступ до LMS та матеріалів', en:'LMS access & materials', es:'Acceso LMS y materiales' },
+  li_g5:{ uk:'Speaking Club безкоштовно', en:'Speaking Club for free', es:'Speaking Club gratis' },
+  li_g6:{ uk:'Щомісячні зустрічі з Олесею', en:'Monthly meetups with Olesya', es:'Reuniones mensuales con Olesya' },
+  li_i1:{ uk:'Заняття 1 на 1 з викладачем', en:'1-on-1 lessons with teacher', es:'Clases 1 a 1 con el profesor' },
+  li_i2:{ uk:'Гнучкий графік та темп',  en:'Flexible schedule & pace', es:'Horario y ritmo flexible' },
+  li_i3:{ uk:'Диплом ECCAEDU після екзамену', en:'ECCAEDU Diploma after exam', es:'Diploma ECCAEDU tras el examen' },
+  li_i4:{ uk:'Доступ до LMS та матеріалів', en:'LMS access & materials', es:'Acceso LMS y materiales' },
+  li_i5:{ uk:'Speaking Club безкоштовно', en:'Speaking Club for free', es:'Speaking Club gratis' },
+  li_i6:{ uk:'Щомісячні зустрічі з Олесею', en:'Monthly meetups with Olesya', es:'Reuniones mensuales con Olesya' },
+  pr_btn:{ uk:'Записатися →', en:'Sign Up →', es:'Inscribirse →' },
+  pn_title:{ uk:'Потрібна консультація?', en:'Need a consultation?', es:'¿Necesitas una consulta?' },
+  pn_desc: { uk:' Напишіть нам у Telegram-бот — підберемо мову, рівень та зручний час. Усі заняття тривають 55 хвилин, 2 рази на тиждень.',
+             en:' Message our Telegram bot — we\'ll find the right language, level, and schedule. All lessons are 55 min, twice a week.',
+             es:' Escríbenos al bot de Telegram — encontraremos el idioma, nivel y horario. Clases de 55 min, dos veces por semana.' },
+  st_label:{ uk:'Як розпочати',         en:'How to start',             es:'Cómo empezar' },
+  st_t1:   { uk:'Три кроки до',         en:'Three steps to',           es:'Tres pasos a' },
+  st_t2:   { uk:'першого уроку',        en:'your first lesson',        es:'tu primera clase' },
+  s1t:{ uk:'Напишіть нам',   en:'Write to us',       es:'Escríbenos' },
+  s1d:{ uk:'Перейдіть до Telegram-бота і залиште заявку. Менеджер відповість швидко та відповість на всі питання.',
+        en:'Go to our Telegram bot and leave a request. Our manager will respond quickly to all your questions.',
+        es:'Ve al bot de Telegram y deja tu solicitud. El manager responderá rápido.' },
+  s2t:{ uk:'Оберіть формат', en:'Choose your format', es:'Elige tu formato' },
+  s2d:{ uk:'Разом визначимо мову, рівень, пакет (груповий або індивідуальний) і зручний графік занять.',
+        en:'Together we\'ll determine the language, level, package (group or individual), and a convenient schedule.',
+        es:'Juntos definiremos el idioma, nivel, paquete y el horario más conveniente.' },
+  s3t:{ uk:'¡Vamos! Починаємо', en:"¡Vamos! Let's start", es:'¡Vamos! Empezamos' },
+  s3d:{ uk:'Після підтвердження та оплати — доступ до LMS і перший урок. Просто та зручно.',
+        en:'After confirmation and payment — LMS access and your first lesson. Simple and easy.',
+        es:'Tras la confirmación y el pago — acceso al LMS y tu primera clase.' },
+  st_btn:{ uk:'Написати в Telegram-бот', en:'Message the Telegram Bot', es:'Escribir al bot de Telegram' },
+  cta_label:{ uk:'Починай зараз',        en:'Start now',                es:'Empieza ya' },
+  cta_h1:   { uk:'Говори',               en:'Speak',                    es:'Habla' },
+  cta_h2:   { uk:'мовою своїх мрій',     en:'the language of your dreams', es:'el idioma de tus sueños' },
+  cta_h3:   { uk:'вже цього місяця',     en:'starting this month',      es:'desde este mes' },
+  cta_p:    { uk:'Приєднуйся до спільноти українців, які вчаться впевнено говорити — і відкривають нові можливості в Іспанії та по всьому світу.',
+              en:'Join a community of Ukrainians learning to speak with confidence — and opening new opportunities in Spain and around the world.',
+              es:'Únete a una comunidad de ucranianos que aprenden a hablar con confianza y abren oportunidades en España y el mundo.' },
+  cta_btn:{ uk:'Записатися в Telegram-бот', en:'Sign Up via Telegram Bot', es:'Inscribirse en el bot de Telegram' },
+  ft_about:{ uk:'Онлайн-школа іспанської, англійської та української мови. Сучасні методики, маленькі групи та живе спілкування.',
+             en:'Online school of Spanish, English and Ukrainian. Modern methods, small groups and live communication.',
+             es:'Escuela online de español, inglés y ucraniano. Métodos modernos, grupos pequeños y conversación en vivo.' },
+  ft_nav:  { uk:'Навігація',   en:'Navigation',  es:'Navegación' },
+  ft_cnt:  { uk:'Контакти',    en:'Contacts',    es:'Contacto' },
+  ft_tg:   { uk:'Telegram-бот (записатися)', en:'Telegram Bot (sign up)', es:'Bot de Telegram (inscripción)' },
+  ft_ig:   { uk:'Instagram Олесі', en:"Olesya's Instagram", es:'Instagram de Olesya' },
+};
+
+// ═══════════════════════════════════════════════════
+//  APPLY LANGUAGE
+// ═══════════════════════════════════════════════════
+var currentLang = 'uk';
+
+function applyLang(l) {
+  currentLang = l;
+  // Update every element with data-k attribute
+  document.querySelectorAll('[data-k]').forEach(function(el) {
+    var key = el.getAttribute('data-k');
+    if (!TR[key]) return;
+    var val = TR[key][l];
+    if (val === undefined) return;
+    // Use innerHTML only for hero_h1 (contains HTML tags)
+    if (key === 'hero_h1') {
+      el.innerHTML = val;
+    } else {
+      el.textContent = val;
+    }
+  });
+  // Update active lang button
+  document.querySelectorAll('.lang-btn').forEach(function(b) {
+    b.classList.toggle('active', b.getAttribute('data-lang') === l);
+  });
+}
+
+// Wire up language buttons
+document.querySelectorAll('.lang-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    applyLang(this.getAttribute('data-lang'));
+  });
+});
+
+// ═══════════════════════════════════════════════════
+//  COURSE TAB SWITCHER
+// ═══════════════════════════════════════════════════
+document.querySelectorAll('.ctab').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var course = this.getAttribute('data-course');
+    document.querySelectorAll('.course-panel').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.ctab').forEach(function(b) { b.classList.remove('active'); });
+    document.getElementById('panel-' + course).classList.add('active');
+    btn.classList.add('active');
+  });
+});
+
+// ═══════════════════════════════════════════════════
+//  SCROLL REVEAL
+// ═══════════════════════════════════════════════════
+var revEls = document.querySelectorAll('.rev');
+var revObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) {
+      var sibs = Array.prototype.slice.call(e.target.parentElement.querySelectorAll('.rev'));
+      var idx = sibs.indexOf(e.target);
+      setTimeout(function() { e.target.classList.add('on'); }, idx * 80);
+      revObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+revEls.forEach(function(el) { revObs.observe(el); });
+</script>
+</body>
+</html>
